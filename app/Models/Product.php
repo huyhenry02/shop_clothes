@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Product extends Model
 {
@@ -21,6 +20,12 @@ class Product extends Model
         'discount_price',
         'stock_quantity',
         'image',
+        'image_detail_1',
+        'image_detail_2',
+        'image_detail_3',
+        'color',
+        'material',
+        'style',
         'is_active',
     ];
 

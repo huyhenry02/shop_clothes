@@ -1,0 +1,48 @@
+1,1,SP_001,Áo thun nam cổ tròn basic,ao-thun-nam-co-tron-basic,"Áo thun nam cổ tròn basic dành cho nam giới, chất liệu cao cấp, thiết kế thời trang và thoải mái.",337000,316000,48,Trắng,Cotton,sport,1
+2,1,SP_002,Áo thun nam thể thao Nike,ao-thun-nam-the-thao-nike,"Áo thun nam thể thao Nike dành cho nam giới, chất liệu cao cấp, thiết kế thời trang và thoải mái.",423000,388000,39,Be,Cotton,sport,1
+3,1,SP_003,Áo thun nam Adidas Originals,ao-thun-nam-adidas-originals,"Áo thun nam Adidas Originals dành cho nam giới, chất liệu cao cấp, thiết kế thời trang và thoải mái.",261000,195000,13,Đen,Cotton,sport,1
+4,1,SP_004,Áo thun nam local brand,ao-thun-nam-local-brand,"Áo thun nam local brand dành cho nam giới, chất liệu cao cấp, thiết kế thời trang và thoải mái.",298000,152000,34,Xanh rêu,Cotton,basic,1
+5,1,SP_005,Áo thun nam in họa tiết rồng,ao-thun-nam-in-hoa-tiet-rong,"Áo thun nam in họa tiết rồng dành cho nam giới, chất liệu cao cấp, thiết kế thời trang và thoải mái.",371000,295000,28,Xanh navy,Cotton,sport,1
+6,1,SP_006,Áo thun nam oversize trơn,ao-thun-nam-oversize-tron,"Áo thun nam oversize trơn dành cho nam giới, chất liệu cao cấp, thiết kế thời trang và thoải mái.",253000,174000,12,Trắng,Cotton,basic,1
+7,2,SP_007,Áo len nam cổ lọ Hàn Quốc,ao-len-nam-co-lo-han-quoc,"Áo len nam cổ lọ Hàn Quốc dành cho nam giới, chất liệu cao cấp, thiết kế thời trang và thoải mái.",484000,339000,28,Xám,Len,casual,1
+8,2,SP_008,Áo len nam lông cừu,ao-len-nam-long-cuu,"Áo len nam lông cừu dành cho nam giới, chất liệu cao cấp, thiết kế thời trang và thoải mái.",298000,235000,14,Xám,Len,casual,1
+9,2,SP_009,Áo len nam đan chéo,ao-len-nam-an-cheo,"Áo len nam đan chéo dành cho nam giới, chất liệu cao cấp, thiết kế thời trang và thoải mái.",418000,177000,14,Xanh rêu,Len,sport,1
+10,2,SP_010,Áo len nam cổ tim,ao-len-nam-co-tim,"Áo len nam cổ tim dành cho nam giới, chất liệu cao cấp, thiết kế thời trang và thoải mái.",493000,415000,15,Xanh rêu,Len,sport,1
+11,2,SP_011,Áo len nam dệt kim cao cấp,ao-len-nam-det-kim-cao-cap,"Áo len nam dệt kim cao cấp dành cho nam giới, chất liệu cao cấp, thiết kế thời trang và thoải mái.",452000,393000,39,Xanh rêu,Len,casual,1
+12,2,SP_012,Áo len nam Uniqlo,ao-len-nam-uniqlo,"Áo len nam Uniqlo dành cho nam giới, chất liệu cao cấp, thiết kế thời trang và thoải mái.",587000,316000,21,Xanh rêu,Len,sport,1
+13,3,SP_013,Áo khoác bomber nam,ao-khoac-bomber-nam,"Áo khoác bomber nam dành cho nam giới, chất liệu cao cấp, thiết kế thời trang và thoải mái.",715000,529000,25,Be,Vải dù,basic,1
+14,3,SP_014,Áo khoác da lộn cao cấp,ao-khoac-da-lon-cao-cap,"Áo khoác da lộn cao cấp dành cho nam giới, chất liệu cao cấp, thiết kế thời trang và thoải mái.",402000,351000,19,Trắng,Vải dù,basic,1
+15,3,SP_015,Áo khoác gió chống nước,ao-khoac-gio-chong-nuoc,"Áo khoác gió chống nước dành cho nam giới, chất liệu cao cấp, thiết kế thời trang và thoải mái.",730000,512000,33,Nâu,Vải dù,sport,1
+16,3,SP_016,Áo khoác denim Levi's,ao-khoac-denim-levis,"Áo khoác denim Levi's dành cho nam giới, chất liệu cao cấp, thiết kế thời trang và thoải mái.",616000,205000,49,Nâu,Vải dù,basic,1
+17,3,SP_017,Áo khoác thể thao Adidas,ao-khoac-the-thao-adidas,"Áo khoác thể thao Adidas dành cho nam giới, chất liệu cao cấp, thiết kế thời trang và thoải mái.",578000,423000,33,Be,Vải dù,basic,1
+18,3,SP_018,Áo khoác hoodie nam,ao-khoac-hoodie-nam,"Áo khoác hoodie nam dành cho nam giới, chất liệu cao cấp, thiết kế thời trang và thoải mái.",419000,414000,40,Nâu,Vải dù,formal,1
+19,4,SP_019,Giày sneaker nam Nike Air,giay-sneaker-nam-nike-air,"Giày sneaker nam Nike Air dành cho nam giới, chất liệu cao cấp, thiết kế thời trang và thoải mái.",329000,287000,37,Xanh navy,Da,basic,1
+20,4,SP_020,Giày sneaker Adidas Superstar,giay-sneaker-adidas-superstar,"Giày sneaker Adidas Superstar dành cho nam giới, chất liệu cao cấp, thiết kế thời trang và thoải mái.",614000,451000,32,Nâu,Da,basic,1
+21,4,SP_021,Dép quai ngang nam Newmen,dep-quai-ngang-nam-newmen,"Dép quai ngang nam Newmen dành cho nam giới, chất liệu cao cấp, thiết kế thời trang và thoải mái.",728000,586000,48,Be,Da,basic,1
+22,4,SP_022,Giày thể thao nam Puma,giay-the-thao-nam-puma,"Giày thể thao nam Puma dành cho nam giới, chất liệu cao cấp, thiết kế thời trang và thoải mái.",676000,621000,43,Xanh navy,Da,sport,1
+23,4,SP_023,Giày lười nam da bò,giay-luoi-nam-da-bo,"Giày lười nam da bò dành cho nam giới, chất liệu cao cấp, thiết kế thời trang và thoải mái.",675000,622000,28,Đen,Da,sport,1
+24,4,SP_024,Giày sneaker nam MLB,giay-sneaker-nam-mlb,"Giày sneaker nam MLB dành cho nam giới, chất liệu cao cấp, thiết kế thời trang và thoải mái.",386000,258000,38,Xanh rêu,Da,sport,1
+25,5,SP_025,Quần lót nam boxer cotton,quan-lot-nam-boxer-cotton,"Quần lót nam boxer cotton dành cho nam giới, chất liệu cao cấp, thiết kế thời trang và thoải mái.",661000,432000,47,Đen,Cotton co giãn,casual,1
+26,5,SP_026,Quần lót nam Aristino,quan-lot-nam-aristino,"Quần lót nam Aristino dành cho nam giới, chất liệu cao cấp, thiết kế thời trang và thoải mái.",582000,430000,39,Đen,Cotton co giãn,casual,1
+27,5,SP_027,Quần lót nam Uniqlo,quan-lot-nam-uniqlo,"Quần lót nam Uniqlo dành cho nam giới, chất liệu cao cấp, thiết kế thời trang và thoải mái.",368000,275000,15,Be,Cotton co giãn,casual,1
+28,5,SP_028,Quần lót nam co giãn 4 chiều,quan-lot-nam-co-gian-4-chieu,"Quần lót nam co giãn 4 chiều dành cho nam giới, chất liệu cao cấp, thiết kế thời trang và thoải mái.",212000,173000,15,Xanh navy,Cotton co giãn,basic,1
+29,5,SP_029,Quần lót nam thể thao,quan-lot-nam-the-thao,"Quần lót nam thể thao dành cho nam giới, chất liệu cao cấp, thiết kế thời trang và thoải mái.",534000,227000,11,Xanh rêu,Cotton co giãn,sport,1
+30,5,SP_030,Quần lót nam cao cấp,quan-lot-nam-cao-cap,"Quần lót nam cao cấp dành cho nam giới, chất liệu cao cấp, thiết kế thời trang và thoải mái.",696000,557000,29,Trắng,Cotton co giãn,sport,1
+31,6,SP_031,Áo polo nam vải cá sấu,ao-polo-nam-vai-ca-sau,"Áo polo nam vải cá sấu dành cho nam giới, chất liệu cao cấp, thiết kế thời trang và thoải mái.",625000,363000,40,Nâu,Cotton cá sấu,formal,1
+32,6,SP_032,Áo polo nam Uniqlo,ao-polo-nam-uniqlo,"Áo polo nam Uniqlo dành cho nam giới, chất liệu cao cấp, thiết kế thời trang và thoải mái.",756000,285000,16,Be,Cotton cá sấu,casual,1
+33,6,SP_033,Áo polo nam Aristino,ao-polo-nam-aristino,"Áo polo nam Aristino dành cho nam giới, chất liệu cao cấp, thiết kế thời trang và thoải mái.",413000,199000,47,Nâu,Cotton cá sấu,basic,1
+34,6,SP_034,Áo polo nam cổ bẻ thanh lịch,ao-polo-nam-co-be-thanh-lich,"Áo polo nam cổ bẻ thanh lịch dành cho nam giới, chất liệu cao cấp, thiết kế thời trang và thoải mái.",305000,288000,32,Be,Cotton cá sấu,formal,1
+35,6,SP_035,Áo polo nam local brand,ao-polo-nam-local-brand,"Áo polo nam local brand dành cho nam giới, chất liệu cao cấp, thiết kế thời trang và thoải mái.",703000,585000,46,Xanh navy,Cotton cá sấu,sport,1
+36,6,SP_036,Áo polo nam thể thao,ao-polo-nam-the-thao,"Áo polo nam thể thao dành cho nam giới, chất liệu cao cấp, thiết kế thời trang và thoải mái.",753000,562000,47,Xanh rêu,Cotton cá sấu,sport,1
+37,7,SP_037,Áo sơ mi nam trắng trơn,ao-so-mi-nam-trang-tron,"Áo sơ mi nam trắng trơn dành cho nam giới, chất liệu cao cấp, thiết kế thời trang và thoải mái.",521000,191000,48,Nâu,Kate,basic,1
+38,7,SP_038,Áo sơ mi nam caro Hàn Quốc,ao-so-mi-nam-caro-han-quoc,"Áo sơ mi nam caro Hàn Quốc dành cho nam giới, chất liệu cao cấp, thiết kế thời trang và thoải mái.",249000,216000,30,Xanh navy,Kate,basic,1
+39,7,SP_039,Áo sơ mi nam công sở xanh navy,ao-so-mi-nam-cong-so-xanh-navy,"Áo sơ mi nam công sở xanh navy dành cho nam giới, chất liệu cao cấp, thiết kế thời trang và thoải mái.",635000,289000,49,Trắng,Kate,formal,1
+40,7,SP_040,Áo sơ mi nam form slimfit,ao-so-mi-nam-form-slimfit,"Áo sơ mi nam form slimfit dành cho nam giới, chất liệu cao cấp, thiết kế thời trang và thoải mái.",295000,260000,47,Xanh rêu,Kate,basic,1
+41,7,SP_041,Áo sơ mi nam cổ tàu,ao-so-mi-nam-co-tau,"Áo sơ mi nam cổ tàu dành cho nam giới, chất liệu cao cấp, thiết kế thời trang và thoải mái.",372000,180000,47,Xanh navy,Kate,basic,1
+42,7,SP_042,Áo sơ mi nam linen ngắn tay,ao-so-mi-nam-linen-ngan-tay,"Áo sơ mi nam linen ngắn tay dành cho nam giới, chất liệu cao cấp, thiết kế thời trang và thoải mái.",633000,510000,24,Đen,Kate,basic,1
+43,8,SP_043,Quần jeans nam ống đứng,quan-jeans-nam-ong-ung,"Quần jeans nam ống đứng dành cho nam giới, chất liệu cao cấp, thiết kế thời trang và thoải mái.",578000,481000,46,Nâu,Jean,basic,1
+44,8,SP_044,Quần kaki nam co giãn,quan-kaki-nam-co-gian,"Quần kaki nam co giãn dành cho nam giới, chất liệu cao cấp, thiết kế thời trang và thoải mái.",415000,376000,41,Nâu,Jean,basic,1
+45,8,SP_045,Quần short nam thể thao,quan-short-nam-the-thao,"Quần short nam thể thao dành cho nam giới, chất liệu cao cấp, thiết kế thời trang và thoải mái.",579000,421000,38,Nâu,Jean,casual,1
+46,8,SP_046,Quần jeans nam rách gối,quan-jeans-nam-rach-goi,"Quần jeans nam rách gối dành cho nam giới, chất liệu cao cấp, thiết kế thời trang và thoải mái.",321000,265000,27,Đen,Jean,casual,1
+47,8,SP_047,Quần kaki nam công sở,quan-kaki-nam-cong-so,"Quần kaki nam công sở dành cho nam giới, chất liệu cao cấp, thiết kế thời trang và thoải mái.",206000,195000,37,Nâu,Jean,formal,1
+48,8,SP_048,Quần short nam vải dù,quan-short-nam-vai-du,"Quần short nam vải dù dành cho nam giới, chất liệu cao cấp, thiết kế thời trang và thoải mái.",226000,217000,42,Xám,Jean,casual,1

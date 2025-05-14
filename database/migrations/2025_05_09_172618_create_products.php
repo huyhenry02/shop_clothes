@@ -21,10 +21,17 @@ return new class extends Migration
             $table->integer('price');
             $table->integer('discount_price')->nullable();
             $table->integer('stock_quantity');
-            $table->string('image', 255);
+            $table->string('image', 255)->nullable();
+            $table->string('image_detail_1', 255)->nullable();
+            $table->string('image_detail_2', 255)->nullable();
+            $table->string('image_detail_3', 255)->nullable();
+            $table->string('color', 50)->nullable();
+            $table->string('material', 100)->nullable();
+            $table->enum('style', ['basic', 'casual', 'sport', 'formal'])->nullable();
             $table->boolean('is_active')->default(1);
             $table->timestamps();
         });
+
 
     }
 
