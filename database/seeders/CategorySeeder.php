@@ -24,7 +24,7 @@ class CategorySeeder extends Seeder
                 'code' => $row[1],
                 'name' => $row[2],
                 'description' => $row[3],
-                'sizes' => json_encode(json_decode(str_replace("'", '"', $row[4]), true, 512, JSON_THROW_ON_ERROR), JSON_THROW_ON_ERROR),
+                'sizes' => $row[4],
                 'created_at' => now(),
                 'updated_at' => now(),
             ];

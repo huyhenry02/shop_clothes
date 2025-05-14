@@ -58,7 +58,7 @@ class ProductSeeder extends Seeder
         ];
         foreach ($csvData as $row) {
             $categoryId = (int)$row[1];
-            $image = $imageMap[$categoryId] ?? '/customer/images/products/default.jpg';
+            $image = $imageMainMap[$categoryId] ?? '/customer/images/products/default.jpg';
             $image_detail_1 = $imageDetailMap[$categoryId] ?? '/customer/images/products/default.jpg';
             $image_detail_2 = $imageDetail2Map[$categoryId] ?? '/customer/images/products/default.jpg';
             $image_detail_3 = $imageDetail3Map[$categoryId] ?? '/customer/images/products/default.jpg';

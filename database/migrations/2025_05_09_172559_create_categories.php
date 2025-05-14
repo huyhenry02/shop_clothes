@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('code', 100);
             $table->string('name', 100);
-            $table->json('sizes')->nullable();
+            $table->text('sizes')->nullable();
             $table->text('description')->nullable();
             $table->timestamps();
         });
