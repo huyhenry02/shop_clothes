@@ -14,7 +14,7 @@ class Employee extends Model
     protected $fillable = [
         'user_id',
         'full_name',
-        'phone',
+        'email',
         'position',
         'address',
     ];
@@ -22,10 +22,5 @@ class Employee extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
-    }
-
-    public function orders(): HasMany
-    {
-        return $this->hasMany(Order::class);
     }
 }

@@ -21,7 +21,7 @@ class CustomerSeeder extends Seeder
                 'id' => $row[0],
                 'user_id' => $row[1],
                 'full_name' => $row[2],
-                'phone' => $row[3],
+                'email' => $row[3],
                 'address' => $row[4],
                 'gender' => $row[5],
                 'birthday' => $row[6],

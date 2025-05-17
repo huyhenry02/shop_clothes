@@ -19,7 +19,7 @@ class UserSeeder extends Seeder
         foreach ($csvData as $row) {
             $users[] = [
                 'id' => $row[0],
-                'email' => $row[1],
+                'phone' => $row[1],
                 'role' => $row[2],
                 'password' => bcrypt(1),
                 'created_at' => now(),

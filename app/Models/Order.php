@@ -14,7 +14,6 @@ class Order extends Model
     protected $table = 'orders';
     protected $fillable = [
         'customer_id',
-        'employee_id',
         'order_code',
         'total_amount',
         'status',
@@ -57,11 +56,6 @@ class Order extends Model
     public function customer(): BelongsTo
     {
         return $this->belongsTo(Customer::class);
-    }
-
-    public function employee(): BelongsTo
-    {
-        return $this->belongsTo(Employee::class);
     }
 
     public function orderDetails(): HasMany

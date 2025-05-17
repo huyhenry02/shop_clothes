@@ -21,7 +21,7 @@ class EmployeeSeeder extends Seeder
                 'id' => $row[0],
                 'user_id' => $row[1],
                 'full_name' => $row[2],
-                'phone' => $row[3],
+                'email' => $row[3],
                 'position' => $row[4],
                 'address' => $row[5],
                 'created_at' => now(),

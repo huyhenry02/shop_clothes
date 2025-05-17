@@ -40,14 +40,22 @@ Route::prefix('admin')
             ->group(function () {
                 Route::get('/index', [AdminEmployeeController::class, 'showIndex'])->name('showIndex');
                 Route::get('/create', [AdminEmployeeController::class, 'showCreate'])->name('showCreate');
-                Route::get('/update', [AdminEmployeeController::class, 'showUpdate'])->name('showUpdate');
+                Route::get('/update/{employee}', [AdminEmployeeController::class, 'showUpdate'])->name('showUpdate');
+
+                Route::post('/update/{employee}', [AdminEmployeeController::class, 'putEmployee'])->name('putEmployee');
+                Route::post('/create', [AdminEmployeeController::class, 'postEmployee'])->name('postEmployee');
+                Route::get('/delete/{employee}', [AdminEmployeeController::class, 'delete'])->name('delete');
             });
         Route::prefix('customer')
             ->name('customer.')
             ->group(function () {
                 Route::get('/index', [AdminCustomerController::class, 'showIndex'])->name('showIndex');
                 Route::get('/create', [AdminCustomerController::class, 'showCreate'])->name('showCreate');
-                Route::get('/update', [AdminCustomerController::class, 'showUpdate'])->name('showUpdate');
+                Route::get('/update/{customer}', [AdminCustomerController::class, 'showUpdate'])->name('showUpdate');
+
+                Route::post('/update/{customer}', [AdminCustomerController::class, 'putCustomer'])->name('putCustomer');
+                Route::post('/create', [AdminCustomerController::class, 'postCustomer'])->name('postCustomer');
+                Route::get('/delete/{customer}', [AdminCustomerController::class, 'delete'])->name('delete');
             });
         Route::prefix('category')
             ->name('category.')
