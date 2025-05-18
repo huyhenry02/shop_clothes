@@ -13,14 +13,21 @@
 
                     <!-- Navigation Menu -->
                     <ul class="nav header-menu d-flex align-items-center mb-0">
-                        <li class="scroll-to-section"><a href="{{ route('customer.showIndex') }}">Trang chủ</a></li>
-                        <li class="scroll-to-section"><a href="{{ route('customer.showListProducts') }}">Sản phẩm</a>
-                        </li>
-                        <li class="scroll-to-section"><a href="{{ route('customer.showAbout') }}">Về chúng tôi</a></li>
-                        <li class="scroll-to-section"><a href="{{ route('customer.showContact') }}">Liên lạc</a></li>
+                        <li class="scroll-to-section"><a
+                                class="{{ request()->route()->getName() === 'customer.showIndex' ? 'active' : '' }}"
+                                href="{{ route('customer.showIndex') }}">Trang chủ</a></li>
+                        <li class="scroll-to-section"><a
+                                class="{{ request()->route()->getName() === 'customer.showListProducts' ? 'active' : '' }}"
+                                href="{{ route('customer.showListProducts') }}">Sản phẩm</a></li>
+                        <li class="scroll-to-section"><a
+                                class="{{ request()->route()->getName() === 'customer.showAbout' ? 'active' : '' }}"
+                                href="{{ route('customer.showAbout') }}">Về chúng tôi</a></li>
+                        <li class="scroll-to-section"><a
+                                class="{{ request()->route()->getName() === 'customer.showContact' ? 'active' : '' }}"
+                                href="{{ route('customer.showContact') }}">Liên lạc</a></li>
                     </ul>
 
-                    @if(auth()->check())
+                    @if( auth()->check() )
                         <div class="header-auth d-flex align-items-center">
                             <a href="" class="cart-icon me-4 text-dark position-relative">
                                 <i class="fa fa-shopping-cart fa-lg"></i>
@@ -39,7 +46,8 @@
                                         <hr class="dropdown-divider">
                                     </li>
                                     @if(auth()->user()->role === User::ROLE_ADMIN)
-                                        <li><a class="dropdown-item" href="{{ route('admin.customer.showIndex') }}">WEB quản trị</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('admin.customer.showIndex') }}">WEB
+                                                quản trị</a></li>
                                         <li>
                                             <hr class="dropdown-divider">
                                         </li>
