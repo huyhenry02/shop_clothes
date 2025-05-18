@@ -73,6 +73,10 @@ Route::prefix('admin')
             ->group(function () {
                 Route::get('/index', [AdminProductController::class, 'showIndex'])->name('showIndex');
                 Route::get('/create', [AdminProductController::class, 'showCreate'])->name('showCreate');
-                Route::get('/update', [AdminProductController::class, 'showUpdate'])->name('showUpdate');
+                Route::get('/update/{product}', [AdminProductController::class, 'showUpdate'])->name('showUpdate');
+
+                Route::post('/create', [AdminProductController::class, 'postProduct'])->name('postProduct');
+                Route::post('/update/{product}', [AdminProductController::class, 'putProduct'])->name('putProduct');
+                Route::get('/delete/{product}', [AdminProductController::class, 'delete'])->name('delete');
             });
     });
