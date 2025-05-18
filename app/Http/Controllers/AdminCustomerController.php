@@ -49,10 +49,18 @@ class AdminCustomerController extends Controller
             $customer->fill($input);
             $customer->save();
             DB::commit();
+            if ($input['type_create'] === 'customer_register') {
+                return redirect()->route('auth.showLogin')->with('success', 'Thêm khách hàng thành công');
+            }
             return redirect()->route('admin.customer.showIndex')->with('success', 'Thêm khách hàng thành công');
+
         }catch (Exception $exception){
             DB::rollBack();
-            return redirect()->route('admin.customer.showIndex')->with('error', 'Thêm khách hàng thất bại');
+            $input = $request->all();
+            if ($input['type_create'] === 'customer_register') {
+                return redirect()->route('customer.showIndex')->with('success', 'Thêm khách hàng thất bại');
+            }
+            return redirect()->route('admin.customer.showIndex')->with('success', 'Thêm khách hàng thất bại');
         }
     }
 

@@ -1,3 +1,4 @@
+@php use App\Models\User; @endphp
 <header class="header-area header-sticky">
     <div class="container">
         <div class="row align-items-center">
@@ -13,49 +14,58 @@
                     <!-- Navigation Menu -->
                     <ul class="nav header-menu d-flex align-items-center mb-0">
                         <li class="scroll-to-section"><a href="{{ route('customer.showIndex') }}">Trang chủ</a></li>
-                        <li class="scroll-to-section"><a href="{{ route('customer.showListProducts') }}">Sản phẩm</a></li>
+                        <li class="scroll-to-section"><a href="{{ route('customer.showListProducts') }}">Sản phẩm</a>
+                        </li>
                         <li class="scroll-to-section"><a href="{{ route('customer.showAbout') }}">Về chúng tôi</a></li>
                         <li class="scroll-to-section"><a href="{{ route('customer.showContact') }}">Liên lạc</a></li>
                     </ul>
-{{--                    <!-- User Info & Cart -->--}}
-{{--                    <div class="header-auth d-flex align-items-center">--}}
-{{--                        <!-- Cart Icon -->--}}
-{{--                        <a href="" class="cart-icon me-4 text-dark position-relative">--}}
-{{--                            <i class="fa fa-shopping-cart fa-lg"></i>--}}
-{{--                            <span class="cart-count">3</span>--}}
-{{--                        </a>--}}
 
-{{--                        <!-- User Dropdown -->--}}
-{{--                        <div class="dropdown user-dropdown ml-3">--}}
-{{--                            <a href="#" class="dropdown-toggle d-flex align-items-center text-dark" data-bs-toggle="dropdown">--}}
-{{--                                <i class="fa fa-user fa-lg me-2"></i>--}}
-{{--                                <span>Trần Đức Huy</span>--}}
-{{--                            </a>--}}
-{{--                            <ul class="dropdown-menu dropdown-menu-end">--}}
-{{--                                <li><a class="dropdown-item" href="">Thông tin</a></li>--}}
-{{--                                <li><a class="dropdown-item" href="">Đơn hàng</a></li>--}}
-{{--                                <li><hr class="dropdown-divider"></li>--}}
-{{--                                <li>--}}
-{{--                                    <form method="POST" action="">--}}
-{{--                                        <button class="dropdown-item text-danger"><i class="fa fa-sign-out-alt me-2"></i>Đăng xuất</button>--}}
-{{--                                    </form>--}}
-{{--                                </li>--}}
-{{--                            </ul>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-
-                    <!-- Auth Buttons -->
-                    <div class="header-auth d-flex align-items-center">
-                        <li class="submenu">
-
-                        </li>
-                        <a href="{{ route('auth.showLogin') }}" class="auth-link me-3">
-                            <i class="fa fa-sign-in me-1"></i> Đăng nhập
-                        </a>
-                        <a href="{{ route('auth.showRegister') }}" class="auth-link ml-2">
-                            <i class="fa fa-user-plus me-1"></i> Đăng ký
-                        </a>
-                    </div>
+                    @if(auth()->check())
+                        <div class="header-auth d-flex align-items-center">
+                            <a href="" class="cart-icon me-4 text-dark position-relative">
+                                <i class="fa fa-shopping-cart fa-lg"></i>
+                                <span class="cart-count">3</span>
+                            </a>
+                            <div class="dropdown user-dropdown ml-3">
+                                <a href="#" class="dropdown-toggle d-flex align-items-center text-dark"
+                                   data-bs-toggle="dropdown">
+                                    <i class="fa fa-user fa-lg me-2"></i>
+                                    <span>{{ auth()->user()->employee->full_name ?? auth()->user()->customer->full_name }}</span>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li><a class="dropdown-item" href="">Thông tin</a></li>
+                                    <li><a class="dropdown-item" href="">Đơn hàng</a></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    @if(auth()->user()->role === User::ROLE_ADMIN)
+                                        <li><a class="dropdown-item" href="{{ route('admin.customer.showIndex') }}">WEB quản trị</a></li>
+                                        <li>
+                                            <hr class="dropdown-divider">
+                                        </li>
+                                    @endif
+                                    <li>
+                                        <form method="POST" action="">
+                                            <a class="dropdown-item text-danger" href="{{ route('auth.logout') }}"><i
+                                                    class="fa fa-sign-out-alt me-2"></i>Đăng xuất
+                                            </a>
+                                        </form>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    @else
+                        <div class="header-auth d-flex align-items-center">
+                            <li class="submenu">
+                            </li>
+                            <a href="{{ route('auth.showLogin') }}" class="auth-link me-3">
+                                <i class="fa fa-sign-in me-1"></i> Đăng nhập
+                            </a>
+                            <a href="{{ route('auth.showRegister') }}" class="auth-link ml-2">
+                                <i class="fa fa-user-plus me-1"></i> Đăng ký
+                            </a>
+                        </div>
+                    @endif
                 </nav>
             </div>
         </div>
@@ -104,6 +114,7 @@
     .header-auth .auth-link:hover {
         color: #ff6f61;
     }
+
     .cart-icon {
         position: relative;
         font-size: 1.2rem;

@@ -5,6 +5,7 @@
         <div class="col-12">
             <form method="POST" action="{{ route('admin.customer.postCustomer') }}" enctype="multipart/form-data">
                 @csrf
+                <input name="type_create" type="hidden" id="name" class="form-control" required value="admin_create">
                 <div class="card h-100">
                     <div class="card-body">
                         <div class="row">

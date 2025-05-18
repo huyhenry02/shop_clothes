@@ -1,7 +1,26 @@
 @php
-    use Illuminate\Support\Str;
-@endphp
+    $route = request()->route()->getName();
 
+    $breadcrumbs = [
+        'admin.customer.showIndex' => ['Khách hàng', 'Danh sách'],
+        'admin.customer.showCreate' => ['Khách hàng', 'Thêm mới'],
+        'admin.customer.showUpdate' => ['Khách hàng', 'Cập nhật'],
+
+        'admin.employee.showIndex' => ['Nhân viên', 'Danh sách'],
+        'admin.employee.showCreate' => ['Nhân viên', 'Thêm mới'],
+        'admin.employee.showUpdate' => ['Nhân viên', 'Cập nhật'],
+
+        'admin.category.showIndex' => ['Danh mục', 'Danh sách'],
+        'admin.category.showCreate' => ['Danh mục', 'Thêm mới'],
+        'admin.category.showUpdate' => ['Danh mục', 'Cập nhật'],
+
+        'admin.product.showIndex' => ['Sản phẩm', 'Danh sách'],
+        'admin.product.showCreate' => ['Sản phẩm', 'Thêm mới'],
+        'admin.product.showUpdate' => ['Sản phẩm', 'Cập nhật'],
+    ];
+
+    [$moduleTitle, $actionTitle] = $breadcrumbs[$route] ?? ['Trang', 'Không xác định'];
+@endphp
 <div class="main-header">
     <div class="main-header-logo">
         <!-- Logo Header -->
@@ -37,7 +56,7 @@
                 class="navbar navbar-header-left navbar-expand-lg navbar-form nav-search p-0 d-none d-lg-flex mt-3" style="color: white"
             >
                 <h3 class="mb-3" style="color: white">
-
+                    {{ $actionTitle }} {{ $moduleTitle }}
                 </h3>
                 <ul class="breadcrumbs mb-3">
                     <li class="nav-home">
@@ -49,13 +68,13 @@
                         <i class="icon-arrow-right"></i>
                     </li>
                     <li class="nav-item" style="color: white">
-
+                       Quản lý {{ $moduleTitle }}
                     </li>
                     <li class="separator">
                         <i class="icon-arrow-right"></i>
                     </li>
-                    <li class="nav-item">
-
+                    <li class="nav-item" style="color: white">
+                        {{ $actionTitle }}
                     </li>
                 </ul>
             </nav>
@@ -95,7 +114,7 @@
                         </div>
                         <span class="profile-username">
                       <span style="color: white">Xin chào,</span>
-                      <span style="color: white"></span>
+                      <span style="color: white"> {{ auth()->user()->employee->full_name ?? '' }}</span>
                     </span>
                     </a>
                     <ul class="dropdown-menu dropdown-user animated fadeIn">
@@ -110,18 +129,18 @@
                                         />
                                     </div>
                                     <div class="u-text">
-                                        <h4></h4>
+                                        <h4>{{ auth()->user()->employee->full_name ?? '' }}</h4>
                                         <p class="text-muted"></p>
                                     </div>
                                 </div>
                             </li>
                             <li>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="">Website phòng khám</a>
+                                <a class="dropdown-item" href="{{ route('customer.showIndex') }}">Web shop</a>
                             </li>
                             <li>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="">Đăng xuất</a>
+                                <a class="dropdown-item" href="{{ route('auth.logout') }}">Đăng xuất</a>
                             </li>
                         </div>
                     </ul>
@@ -129,5 +148,4 @@
             </ul>
         </div>
     </nav>
-    <!-- End Navbar -->
 </div>

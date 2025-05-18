@@ -20,18 +20,19 @@
                         <h4>Chào mừng bạn quay trở lại!</h4>
                         <span>Điền thông tin tài khoản để đăng nhập</span>
                     </div>
-                    <form id="login-form" action="" method="POST">
+                    <form id="login-form" action="{{ route('auth.postLogin') }}" method="POST">
                         @csrf
                         <div class="form-group mb-3">
-                            <label for="email">Địa chỉ email</label>
-                            <input name="email" type="email" id="email" class="form-control" placeholder="Nhập email..." required>
+                            <label for="phone">Số điện thoại</label>
+                            <input name="phone" type="text" id="phone" class="form-control" placeholder="Nhập số điện thoại..." required>
                         </div>
-                        <div class="form-group mb-3">
-                            <label for="password">Mật khẩu</label>
+                        <div class="form-group mb-3 position-relative">
+                            <label for="password">Mật khẩu<span class="text-danger">*</span></label>
                             <input name="password" type="password" id="password" class="form-control" placeholder="Nhập mật khẩu..." required>
+                            <span toggle="#password" class="fa fa-fw fa-eye toggle-password position-absolute" style="top: 38px; right: 15px; cursor: pointer;"></span>
                         </div>
                         <div class="form-check mb-3">
-                            <input class="form-check-input" type="checkbox" id="remember" name="remember">
+                            <input class="form-check-input" type="checkbox" id="remember" name="remember" value="1">
                             <label class="form-check-label" for="remember">
                                 Ghi nhớ đăng nhập
                             </label>
@@ -42,14 +43,24 @@
                             </button>
                         </div>
                         <div class="text-center">
-                            <a href="" class="text-muted">Quên mật khẩu?</a> |
-                            <a href="">Chưa có tài khoản? Đăng ký</a>
+                            <a href="{{ route('auth.showRegister') }}">Chưa có tài khoản? Đăng ký</a>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+    <script>
+        document.querySelectorAll('.toggle-password').forEach(function (icon) {
+            icon.addEventListener('click', function () {
+                const input = document.querySelector(this.getAttribute('toggle'));
+                const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
+                input.setAttribute('type', type);
+                this.classList.toggle('fa-eye');
+                this.classList.toggle('fa-eye-slash');
+            });
+        });
+    </script>
     <style>
         .login-form-section {
             background-color: #f9f9f9;

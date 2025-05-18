@@ -17,6 +17,8 @@ Route::prefix('auth')
     ->group(function () {
         Route::get('/login', [AuthController::class, 'showLogin'])->name('showLogin');
         Route::get('/register', [AuthController::class, 'showRegister'])->name('showRegister');
+        Route::post('/login', [AuthController::class, 'postLogin'])->name('postLogin');
+        Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
     });
 
 Route::prefix('customer')
