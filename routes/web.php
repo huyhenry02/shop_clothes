@@ -28,10 +28,14 @@ Route::prefix('customer')
         Route::get('/contact', [CustomerController::class, 'showContact'])->name('showContact');
         Route::get('/about', [CustomerController::class, 'showAbout'])->name('showAbout');
         Route::get('/list-products', [CustomerController::class, 'showListProducts'])->name('showListProducts');
-        Route::get('/product-detail', [CustomerController::class, 'showProductDetail'])->name('showProductDetail');
+        Route::get('/product-detail/{product}', [CustomerController::class, 'showProductDetail'])->name('showProductDetail');
         Route::get('/order', [CustomerController::class, 'showOrder'])->name('showOrder');
         Route::get('/cart', [CustomerController::class, 'showCart'])->name('showCart');
         Route::get('/checkout', [CustomerController::class, 'showCheckout'])->name('showCheckout');
+
+        Route::post('add-to-cart', [CustomerController::class, 'addToCart'])->name('addToCart');
+        Route::post('update-cart', [CustomerController::class, 'updateCart'])->name('updateCart');
+        Route::post('delete-cart', [CustomerController::class, 'deleteCart'])->name('deleteCart');
     });
 
 Route::prefix('admin')

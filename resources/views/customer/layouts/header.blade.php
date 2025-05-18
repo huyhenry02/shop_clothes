@@ -29,9 +29,12 @@
 
                     @if( auth()->check() )
                         <div class="header-auth d-flex align-items-center">
-                            <a href="" class="cart-icon me-4 text-dark position-relative">
+                            <a href="{{ route('customer.showCart') }}" class="cart-icon me-4 text-dark position-relative">
                                 <i class="fa fa-shopping-cart fa-lg"></i>
-                                <span class="cart-count">3</span>
+                                @php
+                                $cartCount = auth()->user()->role === User::ROLE_CUSTOMER ? auth()->user()->customer->carts->count() : 0;
+                                @endphp
+                                <span class="cart-count">{{ $cartCount }}</span>
                             </a>
                             <div class="dropdown user-dropdown ml-3">
                                 <a href="#" class="dropdown-toggle d-flex align-items-center text-dark"

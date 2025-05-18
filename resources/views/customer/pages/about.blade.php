@@ -6,8 +6,8 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="inner-content">
-                        <h2>About Our Company</h2>
-                        <span>Awesome, clean &amp; creative HTML5 Template</span>
+                        <h2>Về Chúng Tôi</h2>
+                        <span>Khám phá hành trình thương hiệu và giá trị mà chúng tôi mang lại cho bạn</span>
                     </div>
                 </div>
             </div>
@@ -21,17 +21,18 @@
             <div class="row">
                 <div class="col-lg-6">
                     <div class="left-image">
-                        <img src="/customer/images/about-left-image.jpg" alt="">
+                        <img src="/customer/images/about-left-image.jpg" alt="Về ROWAY">
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <div class="right-content">
-                        <h4>About Us &amp; Our Skills</h4>
-                        <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod kon tempor incididunt ut labore.</span>
+                        <h4>Về Chúng Tôi &amp; Định Hướng Phát Triển</h4>
+                        <span>ROWAY là thương hiệu thời trang hướng đến sự đơn giản, hiện đại và tiện lợi. Chúng tôi cam kết mang đến những sản phẩm chất lượng, phù hợp với phong cách sống năng động của người Việt.</span>
                         <div class="quote">
-                            <i class="fa fa-quote-left"></i><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiuski smod kon tempor incididunt ut labore.</p>
+                            <i class="fa fa-quote-left"></i>
+                            <p>"Thời trang không chỉ là bề ngoài, đó là cách bạn thể hiện cá tính và sống đúng với bản thân."</p>
                         </div>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod kon tempor incididunt ut labore et dolore magna aliqua ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.</p>
+                        <p>Với đội ngũ thiết kế sáng tạo cùng quy trình sản xuất nghiêm ngặt, chúng tôi luôn không ngừng đổi mới để mang đến trải nghiệm mua sắm trực tuyến tốt nhất cho khách hàng. Tại ROWAY, mỗi sản phẩm đều là kết tinh của tâm huyết, sự tỉ mỉ và tình yêu với thời trang.</p>
                         <ul>
                             <li><a href="#"><i class="fa fa-facebook"></i></a></li>
                             <li><a href="#"><i class="fa fa-twitter"></i></a></li>
@@ -45,112 +46,34 @@
     </div>
     <!-- ***** About Area Ends ***** -->
 
-    <!-- ***** Our Team Area Starts ***** -->
-    <section class="our-team">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="section-heading">
-                        <h2>Our Amazing Team</h2>
-                        <span>Details to details is what makes Hexashop different from the other themes.</span>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="team-item">
-                        <div class="thumb">
-                            <div class="hover-effect">
-                                <div class="inner-content">
-                                    <ul>
-                                        <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-behance"></i></a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <img src="/customer/images/team-member-01.jpg">
-                        </div>
-                        <div class="down-content">
-                            <h4>Ragnar Lodbrok</h4>
-                            <span>Product Caretaker</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="team-item">
-                        <div class="thumb">
-                            <div class="hover-effect">
-                                <div class="inner-content">
-                                    <ul>
-                                        <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-behance"></i></a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <img src="/customer/images/team-member-02.jpg">
-                        </div>
-                        <div class="down-content">
-                            <h4>Ragnar Lodbrok</h4>
-                            <span>Product Caretaker</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="team-item">
-                        <div class="thumb">
-                            <div class="hover-effect">
-                                <div class="inner-content">
-                                    <ul>
-                                        <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-behance"></i></a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <img src="/customer/images/team-member-03.jpg">
-                        </div>
-                        <div class="down-content">
-                            <h4>Ragnar Lodbrok</h4>
-                            <span>Product Caretaker</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- ***** Our Team Area Ends ***** -->
-
     <!-- ***** Services Area Starts ***** -->
     <section class="our-services">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="section-heading">
-                        <h2>Our Services</h2>
-                        <span>Details to details is what makes Hexashop different from the other themes.</span>
+                        <h2>Dịch Vụ Của Chúng Tôi</h2>
+                        <span>Chúng tôi mang đến trải nghiệm khác biệt qua từng chi tiết nhỏ nhất</span>
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="service-item">
-                        <h4>Synther Vaporware</h4>
-                        <p>Lorem ipsum dolor sit amet, consecteturti adipiscing elit, sed do eiusmod temp incididunt ut labore, et dolore quis ipsum suspend.</p>
+                        <h4>Thiết Kế Hiện Đại</h4>
+                        <p>Luôn cập nhật xu hướng mới, sản phẩm của ROWAY mang lại vẻ ngoài trẻ trung và thời thượng.</p>
                         <img src="/customer/images/service-01.jpg" alt="">
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="service-item">
-                        <h4>Locavore Squidward</h4>
-                        <p>Lorem ipsum dolor sit amet, consecteturti adipiscing elit, sed do eiusmod temp incididunt ut labore, et dolore quis ipsum suspend.</p>
+                        <h4>Chất Lượng Đảm Bảo</h4>
+                        <p>Chúng tôi lựa chọn chất liệu kỹ lưỡng và kiểm tra nghiêm ngặt trước khi đưa sản phẩm đến tay bạn.</p>
                         <img src="/customer/images/service-02.jpg" alt="">
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="service-item">
-                        <h4>Health Gothfam</h4>
-                        <p>Lorem ipsum dolor sit amet, consecteturti adipiscing elit, sed do eiusmod temp incididunt ut labore, et dolore quis ipsum suspend.</p>
+                        <h4>Hỗ Trợ Khách Hàng</h4>
+                        <p>Đội ngũ tư vấn thân thiện và nhiệt tình, sẵn sàng hỗ trợ bạn 24/7 với mọi vấn đề khi mua sắm.</p>
                         <img src="/customer/images/service-03.jpg" alt="">
                     </div>
                 </div>
@@ -165,19 +88,19 @@
             <div class="row">
                 <div class="col-lg-8">
                     <div class="section-heading">
-                        <h2>By Subscribing To Our Newsletter You Can Get 30% Off</h2>
-                        <span>Details to details is what makes Hexashop different from the other themes.</span>
+                        <h2>Đăng ký nhận bản tin – Nhận ưu đãi 30%</h2>
+                        <span>Luôn cập nhật các xu hướng mới và ưu đãi hấp dẫn từ ROWAY</span>
                     </div>
                     <form id="subscribe" action="" method="get">
                         <div class="row">
                             <div class="col-lg-5">
                                 <fieldset>
-                                    <input name="name" type="text" id="name" placeholder="Your Name" required="">
+                                    <input name="name" type="text" id="name" placeholder="Họ và tên của bạn" required="">
                                 </fieldset>
                             </div>
                             <div class="col-lg-5">
                                 <fieldset>
-                                    <input name="email" type="text" id="email" pattern="[^ @]*@[^ @]*" placeholder="Your Email Address" required="">
+                                    <input name="email" type="text" id="email" pattern="[^ @]*@[^ @]*" placeholder="Địa chỉ Email của bạn" required="">
                                 </fieldset>
                             </div>
                             <div class="col-lg-2">
@@ -192,16 +115,16 @@
                     <div class="row">
                         <div class="col-6">
                             <ul>
-                                <li>Store Location:<br><span>Sunny Isles Beach, FL 33160, United States</span></li>
-                                <li>Phone:<br><span>010-020-0340</span></li>
-                                <li>Office Location:<br><span>North Miami Beach</span></li>
+                                <li>Địa chỉ cửa hàng:<br><span>Hà Nội, Việt Nam</span></li>
+                                <li>Điện thoại:<br><span>0901 234 567</span></li>
+                                <li>Văn phòng:<br><span>TP. Hồ Chí Minh</span></li>
                             </ul>
                         </div>
                         <div class="col-6">
                             <ul>
-                                <li>Work Hours:<br><span>07:30 AM - 9:30 PM Daily</span></li>
-                                <li>Email:<br><span>info@company.com</span></li>
-                                <li>Social Media:<br><span><a href="#">Facebook</a>, <a href="#">Instagram</a>, <a href="#">Behance</a>, <a href="#">Linkedin</a></span></li>
+                                <li>Giờ làm việc:<br><span>08:00 - 21:00 (cả tuần)</span></li>
+                                <li>Email:<br><span>support@roway.vn</span></li>
+                                <li>Mạng xã hội:<br><span><a href="#">Facebook</a>, <a href="#">Instagram</a>, <a href="#">Zalo</a>, <a href="#">Tiktok</a></span></li>
                             </ul>
                         </div>
                     </div>
@@ -210,6 +133,4 @@
         </div>
     </div>
     <!-- ***** Subscribe Area Ends ***** -->
-
-    <!-- ***** Footer Start ***** -->
 @endsection

@@ -52,6 +52,7 @@
                             <div class="col-lg-12">
                                 <fieldset>
                                     <button type="submit" id="form-submit" class="main-dark-button"><i class="fa fa-paper-plane"></i></button>
+                                </fieldset>
                             </div>
                         </div>
                     </form>
