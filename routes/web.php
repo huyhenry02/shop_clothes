@@ -9,7 +9,7 @@ use App\Http\Controllers\CustomerController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('customer.pages.index');
+    return redirect()->route('customer.showIndex');
 });
 
 Route::prefix('auth')
@@ -29,17 +29,20 @@ Route::prefix('customer')
         Route::get('/about', [CustomerController::class, 'showAbout'])->name('showAbout');
         Route::get('/list-products', [CustomerController::class, 'showListProducts'])->name('showListProducts');
         Route::get('/product-detail/{product}', [CustomerController::class, 'showProductDetail'])->name('showProductDetail');
-        Route::get('/order', [CustomerController::class, 'showOrder'])->name('showOrder');
-        Route::get('/cart', [CustomerController::class, 'showCart'])->name('showCart');
-        Route::get('/checkout', [CustomerController::class, 'showCheckout'])->name('showCheckout');
+        Route::get('/order', [CustomerController::class, 'showOrder'])->name('showOrder')->middleware('auth');
+        Route::get('/cart', [CustomerController::class, 'showCart'])->name('showCart')->middleware('auth');
+        Route::get('/checkout', [CustomerController::class, 'showCheckout'])->name('showCheckout')->middleware('auth');
 
-        Route::post('add-to-cart', [CustomerController::class, 'addToCart'])->name('addToCart');
-        Route::post('update-cart', [CustomerController::class, 'updateCart'])->name('updateCart');
-        Route::post('delete-cart', [CustomerController::class, 'deleteCart'])->name('deleteCart');
+        Route::post('add-to-cart', [CustomerController::class, 'addToCart'])->name('addToCart')->middleware('auth');
+        Route::post('update-cart', [CustomerController::class, 'updateCart'])->name('updateCart')->middleware('auth');
+        Route::post('delete-cart', [CustomerController::class, 'deleteCart'])->name('deleteCart')->middleware('auth');
+        Route::post('checkout', [CustomerController::class, 'postCheckout'])->name('postCheckout')->middleware('auth');
+        Route::get('vnpay-return', [CustomerController::class, 'vnpayReturn'])->name('vnpay.return')->middleware('auth');
     });
 
 Route::prefix('admin')
     ->name('admin.')
+    ->middleware('auth')
     ->group(function () {
         Route::prefix('employee')
             ->name('employee.')

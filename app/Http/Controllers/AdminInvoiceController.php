@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class AdminPaymentController extends Controller
+class AdminInvoiceController extends Controller
 {
     //
 }

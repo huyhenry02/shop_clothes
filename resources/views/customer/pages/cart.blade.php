@@ -124,9 +124,10 @@
                                             </h6>
                                         </div>
                                         <div class="text-center w-100">
-                                            <button type="button" class="btn btn-dark btn-block btn-lg">
+                                            <a href="{{ route('customer.showCheckout') }}"
+                                               class="btn btn-dark btn-block btn-lg">
                                                 Thanh toán ngay
-                                            </button>
+                                            </a>
                                         </div>
 
                                     </div>

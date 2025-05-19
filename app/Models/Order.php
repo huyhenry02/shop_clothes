@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Order extends Model
 {
+
     use HasFactory;
     protected $table = 'orders';
     protected $fillable = [
@@ -19,8 +20,16 @@ class Order extends Model
         'status',
         'payment_status',
         'payment_method',
+        'shipping_name',
+        'shipping_phone',
+        'shipping_email',
         'shipping_address',
-        'note',
+        'completed_at',
+        'payment_time',
+        'payment_transaction_id',
+        'payment_bank_code',
+        'payment_response_code',
+        'payment_secure_hash',
     ];
     public const STATUS_PENDING = 'pending';
     public const STATUS_PROCESSING = 'processing';
@@ -34,6 +43,15 @@ class Order extends Model
         self::STATUS_SHIPPING => 'Đang giao hàng',
         self::STATUS_COMPLETED => 'Hoàn thành',
         self::STATUS_CANCELLED => 'Đã hủy',
+
+    ];
+
+    public const HEADER_STATUSES = [
+        self::STATUS_PENDING => 'Đơn hàng mới',
+        self::STATUS_PROCESSING => 'Đơn hàng đang xử lý',
+        self::STATUS_SHIPPING => 'Đơn hàng đang giao',
+        self::STATUS_COMPLETED => 'Đơn hàng đã được giao thành công',
+        self::STATUS_CANCELLED => 'Đơn hàng đã bị hủy',
     ];
 
     public const PAYMENT_STATUS_UNPAID = 'unpaid';
@@ -50,8 +68,8 @@ class Order extends Model
     public const PAYMENT_METHOD_VNPAY = 'vnpay';
 
     public const PAYMENT_METHODS = [
-        self::PAYMENT_METHOD_COD => 'Thanh toán khi nhận hàng',
-        self::PAYMENT_METHOD_VNPAY => 'Thanh toán qua VNPay',
+        self::PAYMENT_METHOD_COD => 'COD',
+        self::PAYMENT_METHOD_VNPAY => 'VNPay',
     ];
     public function customer(): BelongsTo
     {
@@ -61,10 +79,5 @@ class Order extends Model
     public function orderDetails(): HasMany
     {
         return $this->hasMany(OrderDetail::class);
-    }
-
-    public function payment(): HasOne
-    {
-        return $this->hasOne(Payment::class);
     }
 }

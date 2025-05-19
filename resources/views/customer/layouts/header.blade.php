@@ -43,8 +43,7 @@
                                     <span>{{ auth()->user()->employee->full_name ?? auth()->user()->customer->full_name }}</span>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end">
-                                    <li><a class="dropdown-item" href="">Thông tin</a></li>
-                                    <li><a class="dropdown-item" href="">Đơn hàng</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('customer.showOrder') }}">Đơn hàng</a></li>
                                     <li>
                                         <hr class="dropdown-divider">
                                     </li>
