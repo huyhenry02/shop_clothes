@@ -21,9 +21,9 @@
         'admin.order.showIndex' => ['Đơn hàng', 'Danh sách'],
         'admin.order.showUpdate' => ['Đơn hàng', 'Cập nhật'],
 
-        'admin.invoice.showIndex' => ['Đơn hàng', 'Danh sách'],
-        'admin.invoice.showUpdate' => ['Đơn hàng', 'Cập nhật'],
-        'admin.invoice.showCreate' => ['Đơn hàng', 'Thêm mới'],
+        'admin.invoice.showIndex' => ['Hóa đơn', 'Danh sách'],
+        'admin.invoice.showUpdate' => ['Hóa đơn', 'Cập nhật'],
+        'admin.invoice.showCreate' => ['Hóa đơn', 'Thêm mới'],
     ];
 
     [$moduleTitle, $actionTitle] = $breadcrumbs[$route] ?? ['Trang', 'Không xác định'];
