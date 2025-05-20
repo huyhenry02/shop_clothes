@@ -23,7 +23,37 @@ class AdminInvoiceController extends Controller
             'invoices' => $invoices,
         ]);
     }
+    public function filter(Request $request): JsonResponse
+    {
+        $query = Invoice::orderBy('created_at', 'desc')->query();
 
+        if ($request->filled('keyword')) {
+            $keyword = $request->keyword;
+            $query->where(function ($q) use ($keyword) {
+                $q->where('invoice_code', 'like', "%$keyword%")
+                    ->orWhere('customer_name', 'like', "%$keyword%")
+                    ->orWhere('customer_phone', 'like', "%$keyword%");
+            });
+        }
+
+        if ($request->filled('payment_method')) {
+            $query->where('payment_method', $request->payment_method);
+        }
+
+        if ($request->filled('payment_status')) {
+            $query->where('payment_status', $request->payment_status);
+        }
+
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
+        $invoices = $query->get();
+
+        return response()->json([
+            'html' => view('admin.pages.invoice.table', compact('invoices'))->render()
+        ]);
+    }
     public function showUpdate(Invoice $invoice): View
     {
         return view('admin.pages.invoice.update', [

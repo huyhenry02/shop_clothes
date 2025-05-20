@@ -32,6 +32,8 @@ Route::prefix('customer')
         Route::get('/order', [CustomerController::class, 'showOrder'])->name('showOrder')->middleware('auth');
         Route::get('/cart', [CustomerController::class, 'showCart'])->name('showCart')->middleware('auth');
         Route::get('/checkout', [CustomerController::class, 'showCheckout'])->name('showCheckout')->middleware('auth');
+        Route::get('/filter-products', [CustomerController::class, 'filterProducts'])->name('filterProducts');
+
 
         Route::post('add-to-cart', [CustomerController::class, 'addToCart'])->name('addToCart')->middleware('auth');
         Route::post('update-cart', [CustomerController::class, 'updateCart'])->name('updateCart')->middleware('auth');
@@ -50,6 +52,7 @@ Route::prefix('admin')
                 Route::get('/index', [AdminEmployeeController::class, 'showIndex'])->name('showIndex');
                 Route::get('/create', [AdminEmployeeController::class, 'showCreate'])->name('showCreate');
                 Route::get('/update/{employee}', [AdminEmployeeController::class, 'showUpdate'])->name('showUpdate');
+                Route::get('/filter-employees', [AdminEmployeeController::class, 'filter'])->name('filter');
 
                 Route::post('/update/{employee}', [AdminEmployeeController::class, 'putEmployee'])->name('putEmployee');
                 Route::post('/create', [AdminEmployeeController::class, 'postEmployee'])->name('postEmployee');
@@ -61,6 +64,7 @@ Route::prefix('admin')
                 Route::get('/index', [AdminCustomerController::class, 'showIndex'])->name('showIndex');
                 Route::get('/create', [AdminCustomerController::class, 'showCreate'])->name('showCreate');
                 Route::get('/update/{customer}', [AdminCustomerController::class, 'showUpdate'])->name('showUpdate');
+                Route::get('/filter-customers', [AdminCustomerController::class, 'filter'])->name('filter');
 
                 Route::post('/update/{customer}', [AdminCustomerController::class, 'putCustomer'])->name('putCustomer');
                 Route::post('/create', [AdminCustomerController::class, 'postCustomer'])->name('postCustomer');
@@ -72,6 +76,7 @@ Route::prefix('admin')
                 Route::get('/index', [AdminCategoryController::class, 'showIndex'])->name('showIndex');
                 Route::get('/create', [AdminCategoryController::class, 'showCreate'])->name('showCreate');
                 Route::get('/update/{category}', [AdminCategoryController::class, 'showUpdate'])->name('showUpdate');
+                Route::get('/filter-categories', [AdminCategoryController::class, 'filter'])->name('filter');
 
                 Route::post('/create', [AdminCategoryController::class, 'postCategory'])->name('postCategory');
                 Route::post('/update/{category}', [AdminCategoryController::class, 'putCategory'])->name('putCategory');
@@ -83,6 +88,7 @@ Route::prefix('admin')
                 Route::get('/index', [AdminProductController::class, 'showIndex'])->name('showIndex');
                 Route::get('/create', [AdminProductController::class, 'showCreate'])->name('showCreate');
                 Route::get('/update/{product}', [AdminProductController::class, 'showUpdate'])->name('showUpdate');
+                Route::get('/filter-products', [AdminProductController::class, 'filter'])->name('filter');
 
                 Route::post('/create', [AdminProductController::class, 'postProduct'])->name('postProduct');
                 Route::post('/update/{product}', [AdminProductController::class, 'putProduct'])->name('putProduct');
@@ -93,6 +99,7 @@ Route::prefix('admin')
             ->group(function () {
                 Route::get('/index', [AdminOrderController::class, 'showIndex'])->name('showIndex');
                 Route::get('/update/{order}', [AdminOrderController::class, 'showUpdate'])->name('showUpdate');
+                Route::get('/filter-orders', [AdminOrderController::class, 'filter'])->name('filter');
 
                 Route::post('/update/{order}', [AdminOrderController::class, 'putOrder'])->name('putOrder');
             });
@@ -103,6 +110,7 @@ Route::prefix('admin')
                 Route::get('/create', [AdminInvoiceController::class, 'showCreate'])->name('showCreate');
                 Route::get('/get-product-by-code/{code}', [AdminInvoiceController::class, 'getProductByCode'])->name('getProductByCode');
                 Route::get('/update/{invoice}', [AdminInvoiceController::class, 'showUpdate'])->name('showUpdate');
+                Route::get('/filter-invoices', [AdminInvoiceController::class, 'filter'])->name('filter');
 
                 Route::post('/create', [AdminInvoiceController::class, 'postInvoice'])->name('postInvoice');
                 Route::get('vnpay-return', [AdminInvoiceController::class, 'vnpayReturn'])->name('vnpay.return')->middleware('auth');

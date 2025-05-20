@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Exception;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -18,6 +19,19 @@ class AdminCategoryController extends Controller
             [
                 'categories' => $categories,
             ]);
+    }
+    public function filter(Request $request): JsonResponse
+    {
+        $keyword = $request->keyword;
+
+        $categories = Category::where('name', 'like', "%$keyword%")
+            ->orWhere('code', 'like', "%$keyword%")
+            ->orWhere('description', 'like', "%$keyword%")
+            ->get();
+
+        return response()->json([
+            'html' => view('admin.pages.category.table', compact('categories'))->render()
+        ]);
     }
 
     public function showCreate(): View

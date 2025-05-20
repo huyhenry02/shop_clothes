@@ -34,8 +34,8 @@ class Invoice extends Model
     public const PAYMENT_METHOD_VNPAY = 'vnpay';
 
     public const PAYMENT_METHODS = [
-        self::PAYMENT_METHOD_CASH => 'Thanh toán tiền mặt',
-        self::PAYMENT_METHOD_VNPAY => 'Thanh toán qua VNPay',
+        self::PAYMENT_METHOD_CASH => 'Tiền mặt',
+        self::PAYMENT_METHOD_VNPAY => 'VNPay',
     ];
 
     public const PAYMENT_STATUS_UNPAID = 'unpaid';

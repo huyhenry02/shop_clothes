@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Customer;
 use App\Models\User;
 use Exception;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -19,6 +20,22 @@ class AdminCustomerController extends Controller
             [
                 'customers' => $customers,
             ]);
+    }
+
+    public function filter(Request $request): JsonResponse
+    {
+        $keyword = $request->keyword;
+
+        $customers = Customer::where(function ($query) use ($keyword) {
+            $query->where('full_name', 'like', "%$keyword%")
+                ->orWhereHas('user', function ($q) use ($keyword) {
+                    $q->where('phone', 'like', "%$keyword%");
+                });
+        })->get();
+
+        return response()->json([
+            'html' => view('admin.pages.customer.table', compact('customers'))->render()
+        ]);
     }
 
     public function showCreate(): View

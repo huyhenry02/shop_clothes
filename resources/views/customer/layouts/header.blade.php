@@ -93,9 +93,8 @@
         justify-content: space-between;
         align-items: center;
     }
-
     .header-logo img {
-        height: 40px;
+        height: 90px;
     }
 
     .header-menu li {

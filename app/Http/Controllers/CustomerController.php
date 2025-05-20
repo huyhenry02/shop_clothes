@@ -51,12 +51,40 @@ class CustomerController extends Controller
 
     public function showListProducts(): View
     {
-        $products = Product::where('is_active', 1)->paginate(9);
+        $products = Product::orderBy('created_at', 'desc')->where('is_active', 1)->paginate(9);
+        $categories = Category::all();
         return view('customer.pages.list_products',
             [
                 'products' => $products,
+                'categories' => $categories,
             ]);
     }
+
+    public function filterProducts(Request $request): JsonResponse
+    {
+        $query = Product::orderBy('created_at', 'desc')->with('category');
+
+        if ($request->filled('keyword')) {
+            $query->where('name', 'like', '%' . $request->keyword . '%');
+        }
+
+        if ($request->filled('category_ids')) {
+            $query->whereIn('category_id', $request->category_ids);
+        }
+
+        if ($request->sort_price === 'asc') {
+            $query->orderBy('discount_price', 'asc');
+        } elseif ($request->sort_price === 'desc') {
+            $query->orderBy('discount_price', 'desc');
+        }
+
+        $products = $query->get();
+
+        $html = view('customer.pages.product_table', compact('products'))->render();
+
+        return response()->json(['html' => $html]);
+    }
+
 
     public function showProductDetail(Product $product): View
     {
@@ -72,7 +100,7 @@ class CustomerController extends Controller
 
     public function showOrder(): View
     {
-        $orders = Order::where('customer_id', auth()->user()->customer->id)->get();
+        $orders = Order::orderBy('created_at', 'desc')->where('customer_id', auth()->user()->customer->id ?? auth()->user()->employee->id)->get();
         return view('customer.pages.order',
             [
                 'orders' => $orders,
@@ -81,8 +109,8 @@ class CustomerController extends Controller
 
     public function showCart(): View
     {
-        $customerId = auth()->user()->customer->id;
-        $carts = Cart::where('customer_id', $customerId)->get();
+        $customerId = auth()->user()->customer->id ?? auth()->user()->employee->id;
+        $carts = Cart::orderBy('created_at', 'desc')->where('customer_id', $customerId)->get();
         return view('customer.pages.cart',
             [
                 'carts' => $carts,
@@ -91,7 +119,7 @@ class CustomerController extends Controller
 
     public function showCheckout(): View
     {
-        $cartItems = Cart::where('customer_id', auth()->user()->customer->id)->get();
+        $cartItems = Cart::orderBy('created_at', 'desc')->where('customer_id', auth()->user()->customer->id)->get();
         $totalPrice = 0;
         foreach ($cartItems as $item) {
             $totalPrice += $item->product->discount_price * $item->quantity;

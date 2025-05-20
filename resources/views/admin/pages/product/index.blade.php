@@ -9,10 +9,58 @@
                         <label class="form-label">Tìm kiếm:</label>
                         <input
                             type="text"
-                            placeholder="Tìm kiếm theo tên"
+                            placeholder="Tìm kiếm theo tên, mã sản phẩm"
                             class="form-control search-input"
                             id="search-input"
                         />
+                    </div>
+                    <div class="col-md-4 position-relative">
+                        <label class="form-label">Loại sản phẩm:</label>
+                        <div class="dropdown w-100">
+                            <button class="btn btn-outline-secondary w-100 text-start dropdown-toggle"
+                                    type="button" data-bs-toggle="dropdown">
+                                🗂 Chọn loại sản phẩm
+                            </button>
+                            <ul class="dropdown-menu p-3"
+                                style="max-height: 250px; overflow-y: auto; width: 100%;">
+                                @foreach($categories as $category)
+                                    <li class="form-check">
+                                        <input class="form-check-input filter-input" type="checkbox"
+                                               name="category_ids[]" value="{{ $category->id }}"
+                                               id="cat-{{ $category->id }}">
+                                        <label class="form-check-label" for="cat-{{ $category->id }}">
+                                            {{ $category->name }}
+                                        </label>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-4 position-relative">
+                        <label class="form-label">Giá tiền:</label>
+                            <select name="sort_price" class="form-select filter-input" id="sort_price">
+                                <option value="">Sắp xếp theo giá</option>
+                                <option value="asc">⬆ Giá tăng dần</option>
+                                <option value="desc">⬇ Giá giảm dần</option>
+                            </select>
+                    </div>
+                    <div class="col-md-4 position-relative">
+                        <label class="form-label">Số lượng trong kho:</label>
+                        <select name="stock_quantity" class="form-select filter-input" id="sort_stock_quantity">
+                            <option value="">Sắp xếp theo SL</option>
+                            <option value="asc">⬆ SL tăng dần</option>
+                            <option value="desc">⬇ SL giảm dần</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4 position-relative">
+                        <label class="form-label">Trạng thái:</label>
+                        <select name="is_active" class="form-select filter-input" id="is_active">
+                            @foreach(Product::STATUSES as $key => $val)
+                                <option value="{{ $key }}">{{ $val }}</option>
+                            @endforeach
+                        </select>
                     </div>
                 </div>
             </div>
@@ -43,58 +91,8 @@
                                     <th class="text-center">Thao tác</th>
                                 </tr>
                                 </thead>
-                                <tbody>
-                                @foreach($products as $key => $val)
-                                    <tr>
-                                        <td>{{ $key + 1 }}</td>
-                                        <td>{{ $val->code ?? 'N/A' }}</td>
-                                        <td class="text-center">
-                                            <img src="{{ $val->image ?? 'N/A' }}" alt="" srcset="" width="100px"
-                                                 height="100px">
-                                        </td>
-                                        <td>{{ $val->category?->name ?? 'N/A' }}</td>
-                                        <td>{{ $val->name ?? 'N/A' }}</td>
-                                        <td>{{ $val->price ? number_format($val->price) : 'N/A' }} VND</td>
-                                        <td>{{ $val->discount_price ? number_format($val->discount_price) : 'N/A' }}
-                                            VND
-                                        </td>
-                                        <td class="text-center">{{ $val->stock_quantity ?? 'N/A' }}</td>
-                                        <td class="text-center">
-                                            <button
-                                                class="btn btn-sm btn-info btn-view-product"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#productDetailModal"
-                                                data-image="{{ $val->image ?? '/customer/images/products/default.jpg' }}"
-                                                data-code="{{ $val->code ?? '' }}"
-                                                data-name="{{ $val->name ?? '' }}"
-                                                data-category="{{ $val->category?->name ?? '' }}"
-                                                data-slug="{{ $val->slug ?? '' }}"
-                                                data-description="{{ $val->description ?? '' }}"
-                                                data-price="{{ $val->price ? number_format($val->price) : '' }}"
-                                                data-discount_price="{{ $val->discount_price ? number_format($val->discount_price) : '' }}"
-                                                data-stock_quantity="{{ $val->stock_quantity ?? '' }}"
-                                                data-image_detail_1="{{ $val->image_detail_1 ?? '/customer/images/products/default.jpg' }}"
-                                                data-image_detail_2="{{ $val->image_detail_2 ?? '/customer/images/products/default.jpg' }}"
-                                                data-image_detail_3="{{ $val->image_detail_3 ?? '/customer/images/products/default.jpg' }}"
-                                                data-color="{{ $val->color ?? '' }}"
-                                                data-material="{{ $val->material ?? '' }}"
-                                                data-style="{{ $val->style ? Product::STYLES[$val->style] : '' }}"
-                                                data-is_active="{{ $val->is_active ? Product::STATUSES[$val->is_active] : '' }}"
-                                            >
-                                                <i class="fas fa-eye"></i>
-                                            </button>
-                                            <a href="{{ route('admin.product.putProduct', $val->id) }}"
-                                               class="btn btn-sm btn-secondary">
-                                                <i class="fas fa-edit"></i>
-                                            </a>
-                                            <button class="btn btn-sm btn-danger"
-                                                    onclick="confirmDelete('{{ route('admin.product.delete', $val->id) }}')"
-                                            >
-                                                <i class="fas fa-trash"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                @endforeach
+                                <tbody id="product-table-body">
+                                @include('admin.pages.product.table', ['products' => $products])
                                 </tbody>
                             </table>
                         </div>
@@ -135,6 +133,43 @@
             $('#modal-material').text(btn.data('material'));
             $('#modal-style').text(btn.data('style'));
             $('#modal-is_active').text(btn.data('is_active'));
+        });
+    </script>
+    <script>
+        function filterProducts() {
+            let keyword = $('#search-input').val();
+            let sort_price = $('#sort_price').val();
+            let stock_quantity = $('#sort_stock_quantity').val();
+            let is_active = $('#is_active').val();
+
+            let category_ids = [];
+            $('input[name="category_ids[]"]:checked').each(function () {
+                category_ids.push($(this).val());
+            });
+
+            $.ajax({
+                url: "{{ route('admin.product.filter') }}",
+                method: 'GET',
+                data: {
+                    keyword: keyword,
+                    sort_price: sort_price,
+                    stock_quantity: stock_quantity,
+                    is_active: is_active,
+                    category_ids: category_ids
+                },
+                success: function (res) {
+                    $('#product-table-body').html(res.html);
+                },
+                error: function () {
+                    alert('Đã xảy ra lỗi khi lọc sản phẩm.');
+                }
+            });
+        }
+
+        $(document).ready(function () {
+            $('.filter-input, #search-input').on('input change', function () {
+                filterProducts();
+            });
         });
     </script>
 @endsection

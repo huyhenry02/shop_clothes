@@ -48,8 +48,8 @@
         <div class="sidebar-logo">
             <!-- Logo Header -->
             <div class="logo-header" data-background-color="white">
-                <a href="#" class="logo">
-
+                <a href="#" class="logo" style="font-size: 30px; margin-left: 50px">
+                    ROWAY
                 </a>
                 <div class="nav-toggle">
                     <button class="btn btn-toggle toggle-sidebar">

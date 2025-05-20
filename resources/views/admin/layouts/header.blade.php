@@ -31,7 +31,7 @@
 <div class="main-header">
     <div class="main-header-logo">
         <!-- Logo Header -->
-        <div class="logo-header" data-background-color="light-blue">
+        <div class="logo-header" data-background-color="blue">
             <a href="#" class="logo">
                 <img
                     src="/assets/img/kaiadmin/logo.png"
@@ -55,7 +55,7 @@
     </div>
     <nav
         class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom"
-        data-background-color="light-blue"
+        data-background-color="blue"
         style="color: white"
     >
         <div class="container-fluid">

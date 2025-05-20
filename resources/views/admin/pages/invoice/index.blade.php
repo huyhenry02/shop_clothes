@@ -9,10 +9,39 @@
                         <label class="form-label">Tìm kiếm:</label>
                         <input
                             type="text"
-                            placeholder="Tìm kiếm theo tên"
-                            class="form-control search-input"
-                            id="search-input"
+                            placeholder="Tìm kiếm theo mã hóa đơn, tên khách hàng, số điện thoại"
+                            class="form-control filter-input"
+                            id="keyword"
                         />
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-4">
+                        <label class="form-label">Phương thức thanh toán:</label>
+                        <select name="payment_method" class="form-select filter-input" id="payment_method">
+                            <option value="">Chọn phương thức</option>
+                            @foreach(Invoice::PAYMENT_METHODS as $key => $val)
+                                <option value="{{ $key }}">{{ $val }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Trạng thái thanh toán:</label>
+                        <select name="payment_status" class="form-select filter-input" id="payment_status">
+                            <option value="">Chọn trạng thái</option>
+                            @foreach(Invoice::PAYMENT_STATUSES as $key => $val)
+                                <option value="{{ $key }}">{{ $val }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Trạng thái hóa đơn:</label>
+                        <select name="status" class="form-select filter-input" id="status">
+                            <option value="">Chọn trạng thái</option>
+                            @foreach(Invoice::STATUSES as $key => $val)
+                                <option value="{{ $key }}">{{ $val }}</option>
+                            @endforeach
+                        </select>
                     </div>
                 </div>
             </div>
@@ -43,38 +72,8 @@
                                     <th class="text-center" width="12%">Thao tác</th>
                                 </tr>
                                 </thead>
-                                <tbody>
-                                @foreach($invoices as $key => $val)
-                                    <tr>
-                                        <td>{{ $key + 1 }}</td>
-                                        <td>{{ $val->invoice_code ?? 'N/A' }}</td>
-                                        <td>{{ $val->customer_name ?? 'N/A' }}</td>
-                                        <td class="text-center">{{ $val->customer_phone ?? 'N/A' }}</td>
-                                        <td class="text-center">{{ $val->status ? Invoice::STATUSES[$val->status] : 'N/A' }}</td>
-                                        <td class="text-center">{{ $val->payment_status ? Invoice::PAYMENT_STATUSES[$val->payment_status] : 'N/A' }}</td>
-                                        <td class="text-center">{{ $val->payment_method ? Invoice::PAYMENT_METHODS[$val->payment_method] : 'N/A' }}</td>
-                                        <td class="text-center">{{ $val->total_amount ? number_format($val->total_amount) : 'N/A' }}</td>
-                                        <td class="text-center">
-                                            <button
-                                                class="btn btn-sm btn-info btn-view-product"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#invoiceModal{{ $val->id }}"
-                                            >
-                                                <i class="fas fa-eye"></i>
-                                            </button>
-                                            <a href="{{ route('admin.invoice.showUpdate', $val->id) }}"
-                                               class="btn btn-sm btn-secondary">
-                                                <i class="fas fa-edit"></i>
-                                            </a>
-                                            <button class="btn btn-sm btn-danger"
-                                                    onclick="confirmDelete('{{ route('admin.invoice.delete', $val->id) }}')"
-                                            >
-                                                <i class="fas fa-trash"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    @include('admin.pages.invoice.detail')
-                                @endforeach
+                                <tbody id="invoice-table-body">
+                                @include('admin.pages.invoice.table', ['invoices' => $invoices])
                                 </tbody>
                             </table>
                         </div>
@@ -92,5 +91,37 @@
                 window.location.href = url;
             }
         }
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function filterInvoices() {
+            let keyword = $('#keyword').val();
+            let payment_method = $('#payment_method').val();
+            let payment_status = $('#payment_status').val();
+            let status = $('#status').val();
+
+            $.ajax({
+                url: "{{ route('admin.invoice.filter') }}",
+                method: 'GET',
+                data: {
+                    keyword: keyword,
+                    payment_method: payment_method,
+                    payment_status: payment_status,
+                    status: status
+                },
+                success: function (res) {
+                    $('#invoice-table-body').html(res.html);
+                },
+                error: function () {
+                    alert('Lỗi khi lọc hóa đơn.');
+                }
+            });
+        }
+
+        $(document).ready(function () {
+            $('.filter-input').on('input change', function () {
+                filterInvoices();
+            });
+        });
     </script>
 @endsection

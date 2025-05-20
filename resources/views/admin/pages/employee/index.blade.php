@@ -9,8 +9,8 @@
                         <input
                             type="text"
                             placeholder="Tìm kiếm theo tên, email, số điện thoại, ..."
-                            class="form-control search-input"
-                            id="search-input"
+                            class="form-control filter-input"
+                            id="keywords"
                         />
                     </div>
                 </div>
@@ -40,7 +40,7 @@
                                     <th class="text-center" width="12%">Thao tác</th>
                                 </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="employee-list">
                                 @foreach($employees as $key => $val)
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
@@ -79,5 +79,21 @@
                 window.location.href = url;
             }
         }
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#keywords').on('keyup', function () {
+                let keyword = $(this).val();
+                $.ajax({
+                    url: '{{ route("admin.employee.filter") }}',
+                    method: 'GET',
+                    data: { keyword: keyword },
+                    success: function (res) {
+                        $('#employee-list').html(res.html);
+                    }
+                });
+            });
+        });
     </script>
 @endsection

@@ -1603,8 +1603,7 @@ Products Page
 
 #products .section-heading {
   text-align: center;
-  margin-bottom: 60px;
-  margin-top: 80px;
+  margin-top: 25px;
 }
 
 #products .item {

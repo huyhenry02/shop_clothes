@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Customer;
 use App\Models\Employee;
 use App\Models\User;
 use Exception;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -19,6 +21,22 @@ class AdminEmployeeController extends Controller
             [
                 'employees' => $employees,
             ]);
+    }
+
+    public function filter(Request $request): JsonResponse
+    {
+        $keyword = $request->keyword;
+
+        $employees = Employee::where(function ($query) use ($keyword) {
+            $query->where('full_name', 'like', "%$keyword%")
+                ->orWhereHas('user', function ($q) use ($keyword) {
+                    $q->where('phone', 'like', "%$keyword%");
+                });
+        })->get();
+
+        return response()->json([
+            'html' => view('admin.pages.employee.table', compact('employees'))->render()
+        ]);
     }
 
     public function showCreate(): View

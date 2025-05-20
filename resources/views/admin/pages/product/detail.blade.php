@@ -14,7 +14,6 @@
                         <img id="modal-image_detail_1" src="" alt="image_detail_1" class="shadow-sm mt-1" style="width: 120px; height: 120px; object-fit: cover;">
                         <img id="modal-image_detail_2" src="" alt="image_detail_1" class="shadow-sm mt-1" style="width: 120px; height: 120px; object-fit: cover;">
                         <img id="modal-image_detail_3" src="" alt="image_detail_1" class="shadow-sm mt-1" style="width: 120px; height: 120px; object-fit: cover;">
-
                     </div>
                     <div class="col-md-9 text-left">
                         <div class="product-info-row">

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Product;
 use Exception;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -15,10 +16,44 @@ class AdminProductController extends Controller
     public function showIndex(): View
     {
         $products = Product::orderBy('created_at', 'desc')->paginate(10);
+        $categories = Category::all();
         return view('admin.pages.product.index',
             [
                 'products' => $products,
+                'categories' => $categories,
             ]);
+    }
+    public function filter(Request $request): JsonResponse
+    {
+        $query = Product::orderBy('created_at', 'desc')->with('category');
+
+        if ($request->filled('keyword')) {
+            $query->where('name', 'like', '%' . $request->keyword . '%')
+                ->orWhere('code', 'like', '%' . $request->keyword . '%')
+                ->orWhere('description', 'like', '%' . $request->keyword . '%');
+        }
+
+        if ($request->has('category_ids') && is_array($request->category_ids)) {
+            $query->whereIn('category_id', $request->category_ids);
+        }
+
+        if ($request->filled('is_active')) {
+            $query->where('is_active', $request->is_active);
+        }
+
+        if ($request->filled('sort_price')) {
+            $query->orderBy('price', $request->sort_price);
+        }
+
+        if ($request->filled('stock_quantity')) {
+            $query->orderBy('stock_quantity', $request->stock_quantity);
+        }
+
+        $products = $query->get();
+
+        return response()->json([
+            'html' => view('admin.pages.product.table', compact('products'))->render()
+        ]);
     }
 
     public function showCreate(): View

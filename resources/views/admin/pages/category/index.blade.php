@@ -9,8 +9,8 @@
                         <input
                             type="text"
                             placeholder="Tìm kiếm theo tên"
-                            class="form-control search-input"
-                            id="search-input"
+                            class="form-control filter-input"
+                            id="keywords"
                         />
                     </div>
                 </div>
@@ -27,7 +27,7 @@
                     <div class="card-body">
                         <div class="table-responsive">
                             <table
-                                class="display table table-bordered table-hover" id="account-table"
+                                class="display table table-bordered table-hover"
                             >
                                 <thead>
                                 <tr>
@@ -39,8 +39,8 @@
                                     <th class="text-center" width="12%">Thao tác</th>
                                 </tr>
                                 </thead>
-                                <tbody>
-                                    @foreach($categories as $key => $category)
+                                <tbody id="category-list">
+                                    @foreach( $categories as $key => $category)
                                         <tr>
                                             <td>{{ $key + 1 }}</td>
                                             <td>{{ $category->code ?? 'N/A' }}</td>
@@ -77,5 +77,21 @@
                 window.location.href = url;
             }
         }
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#keywords').on('keyup', function () {
+                let keyword = $(this).val();
+                $.ajax({
+                    url: '{{ route("admin.category.filter") }}',
+                    method: 'GET',
+                    data: { keyword: keyword },
+                    success: function (res) {
+                        $('#category-list').html(res.html);
+                    }
+                });
+            });
+        });
     </script>
 @endsection
