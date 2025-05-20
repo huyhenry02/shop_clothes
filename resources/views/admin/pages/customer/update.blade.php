@@ -13,37 +13,37 @@
                                 <h5>Thông tin khách hàng</h5>
 
                                 <div class="form-group">
-                                    <label>Tên khách hàng<span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" name="full_name" required
+                                    <label>Tên khách hàng</label>
+                                    <input type="text" class="form-control" name="full_name"
                                            value="{{ old('full_name', $customer->full_name ?? '') }}">
                                 </div>
 
                                 <div class="form-group">
-                                    <label>Email<span class="text-danger">*</span></label>
-                                    <input type="email" class="form-control" name="email" required
+                                    <label>Email</label>
+                                    <input type="email" class="form-control" name="email"
                                            value="{{ old('email', $customer->email ?? '') }}">
                                 </div>
 
                                 <div class="form-group">
-                                    <label>Số điện thoại<span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" name="phone" required
+                                    <label>Số điện thoại</label>
+                                    <input type="text" class="form-control" name="phone"
                                            value="{{ old('phone', $customer->user->phone ?? '') }}">
                                 </div>
 
                                 <div class="form-group">
-                                    <label>Mật khẩu đăng nhập<span class="text-danger">*</span></label>
+                                    <label>Mật khẩu đăng nhập</label>
                                     <input type="password" class="form-control" name="password"
                                            placeholder="{{ isset($customer) ? 'Để trống nếu không đổi mật khẩu' : '' }}">
                                 </div>
 
                                 <div class="form-group">
-                                    <label>Địa chỉ<span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" name="address" required
+                                    <label>Địa chỉ</label>
+                                    <input type="text" class="form-control" name="address"
                                            value="{{ old('address', $customer->address ?? '') }}">
                                 </div>
 
                                 <div class="form-group">
-                                    <label>Giới tính <span class="text-danger">*</span></label>
+                                    <label>Giới tính </label>
                                     <select class="form-control" name="gender">
                                         <option value="{{ Customer::GENDER_MALE }}"
                                             {{ old('gender', $customer->gender ?? '') === Customer::GENDER_MALE ? 'selected' : '' }}>
@@ -61,8 +61,8 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label>Ngày sinh<span class="text-danger">*</span></label>
-                                    <input type="date" class="form-control" name="birthday" required
+                                    <label>Ngày sinh</label>
+                                    <input type="date" class="form-control" name="birthday"
                                            value="{{ old('birthday', isset($customer->birthday) ? Carbon::parse($customer->birthday)->format('Y-m-d') : '') }}">
                                 </div>
                             </div>

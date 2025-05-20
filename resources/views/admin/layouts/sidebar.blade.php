@@ -19,13 +19,23 @@
         'admin.product.showCreate',
         'admin.product.showUpdate',
         ];
+    $routesOrder = [
+        'admin.order.showIndex',
+        'admin.order.showUpdate',
+        ];
+    $routesInvoice = [
+        'admin.invoice.showIndex',
+        'admin.invoice.showUpdate',
+        'admin.invoice.showCreate',
+        ];
 
     $isActiveCustomer = collect($routesCustomer)->contains(fn($route) => request()->routeIs($route));
     $isActiveEmployee = collect($routesEmployee)->contains(fn($route) => request()->routeIs($route));
     $isActiveCategory = collect($routesCategory)->contains(fn($route) => request()->routeIs($route));
     $isActiveProduct = collect($routesProduct)->contains(fn($route) => request()->routeIs($route));
+    $isActiveOrder = collect($routesOrder)->contains(fn($route) => request()->routeIs($route));
+    $isActiveInvoice = collect($routesInvoice)->contains(fn($route) => request()->routeIs($route));
 @endphp
-
 <div class="sidebar-wrapper scrollbar scrollbar-inner">
     <div class="sidebar-content">
         <ul class="nav nav-secondary">
@@ -102,42 +112,37 @@
                 </div>
             </li>
 
-            <li class="nav-item">
-                <a data-bs-toggle="collapse" href="#order" class="" aria-expanded="">
+            <li class="nav-item {{ $isActiveOrder ? 'active' : '' }}">
+                <a data-bs-toggle="collapse" href="#order" class="{{ $isActiveOrder ? '' : 'collapsed' }}" aria-expanded="{{ $isActiveOrder ? 'true' : 'false' }}">
                     <i class="fas fa-shopping-cart"></i>
                     <p class="mt-1">Quản lý đơn hàng</p>
                     <span class="caret"></span>
                 </a>
-                <div class="collapse" id="order">
+                <div class="collapse {{ $isActiveOrder ? 'show' : '' }}" id="order">
                     <ul class="nav nav-collapse">
-                        <li class="">
-                            <a href="#"><span class="sub-item">Danh sách đơn hàng</span></a>
-                        </li>
-                        <li class="">
-                            <a href="#"><span class="sub-item">Thêm mới đơn hàng</span></a>
+                        <li class="{{ request()->routeIs('admin.order.showIndex') ? 'active' : '' }}">
+                            <a href="{{ route('admin.order.showIndex') }}"><span class="sub-item">Danh sách đơn hàng</span></a>
                         </li>
                     </ul>
                 </div>
             </li>
-
-            <li class="nav-item">
-                <a data-bs-toggle="collapse" href="#payment" class="">
+            <li class="nav-item {{ $isActiveInvoice ? 'active' : '' }}">
+                <a data-bs-toggle="collapse" href="#invoice" class="{{ $isActiveInvoice ? '' : 'collapsed' }}" aria-expanded="{{ $isActiveInvoice ? 'true' : 'false' }}">
                     <i class="fas fa-file-invoice-dollar"></i>
                     <p class="mt-1">Quản lý hóa đơn</p>
                     <span class="caret"></span>
                 </a>
-                <div class="collapse" id="payment">
+                <div class="collapse {{ $isActiveInvoice ? 'show' : '' }}" id="invoice">
                     <ul class="nav nav-collapse">
-                        <li class="">
-                            <a href="#"><span class="sub-item">Danh sách hóa đơn</span></a>
+                        <li class="{{ request()->routeIs('admin.invoice.showIndex') ? 'active' : '' }}">
+                            <a href="{{ route('admin.invoice.showIndex') }}"><span class="sub-item">Danh sách hóa đơn</span></a>
                         </li>
-                        <li class="">
-                            <a href="#"><span class="sub-item">Thêm mới hóa đơn</span></a>
+                        <li class="{{ request()->routeIs('admin.invoice.showCreate') ? 'active' : '' }}">
+                            <a href="{{ route('admin.invoice.showCreate') }}"><span class="sub-item">Thêm mới hóa đơn</span></a>
                         </li>
                     </ul>
                 </div>
             </li>
-
         </ul>
     </div>
 </div>

@@ -20,7 +20,7 @@ return new class extends Migration
             $table->enum('status', ['draft', 'completed', 'cancelled'])->default('completed');
             $table->enum('payment_method', ['cash', 'vnpay']);
             $table->enum('payment_status', ['unpaid', 'paid', 'failed'])->default('paid');
-            $table->timestamp('payment_time')->nullable();
+            $table->dateTime('payment_time')->nullable();
             $table->foreignId('employee_id')->nullable()->constrained('employees')->nullOnDelete();
             $table->timestamps();
         });

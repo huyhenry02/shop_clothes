@@ -7,11 +7,11 @@ use App\Models\Category;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Product;
+use App\Services\PaymentService;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
@@ -182,7 +182,7 @@ class CustomerController extends Controller
         }
     }
 
-    public function postCheckout(Request $request): RedirectResponse
+    public function postCheckout(Request $request, PaymentService $paymentService): RedirectResponse
     {
         try {
             $input = $request->input();
@@ -232,7 +232,7 @@ class CustomerController extends Controller
             session([
                 'checkout' => [
                     'customer_id' => $customersId,
-                    'order_code' => $orderCode,
+                    'code' => $orderCode,
                     'total_amount' => $totalPrice,
                     'status' => Order::STATUS_PROCESSING,
                     'payment_status' => Order::PAYMENT_STATUS_PAID,
@@ -244,95 +244,23 @@ class CustomerController extends Controller
                     'cart' => $cartItems->toArray(),
                 ]
             ]);
-            return $this->createPaymentFromCheckout($totalPrice, $orderCode);
+            $returnUrl = route('customer.vnpay.return');
+            return $paymentService->createVnpayRedirectUrl($totalPrice, $orderCode, $returnUrl);
         }catch (Exception $exception){
             DB::rollBack();
             return redirect()->back()->with('error', 'Đặt hàng thất bại');
         }
     }
 
-    private function createPaymentFromCheckout($amount, $orderCode): Redirector|RedirectResponse
+    public function vnpayReturn(Request $request, PaymentService $paymentService)
     {
-        try {
-            $vnp_TmnCode = "HBBQ09I7";
-            $vnp_HashSecret = "3MFXY4YJ9X8XMJ3MJFIZGMK6GSDGVET7";
-            $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-            $vnp_Returnurl = route('customer.vnpay.return');
-
-            $vnp_TxnRef = $orderCode;
-            $vnp_OrderInfo = 'Thanh toán đơn hàng ' . $orderCode;
-            $vnp_Amount = $amount * 100;
-            $vnp_Locale = 'vn';
-            $vnp_BankCode = 'NCB';
-            $vnp_IpAddr = request()->ip();
-
-            $inputData = [
-                "vnp_Version" => "2.1.0",
-                "vnp_TmnCode" => $vnp_TmnCode,
-                "vnp_Amount" => $vnp_Amount,
-                "vnp_Command" => "pay",
-                "vnp_CreateDate" => now()->format('YmdHis'),
-                "vnp_CurrCode" => "VND",
-                "vnp_IpAddr" => $vnp_IpAddr,
-                "vnp_Locale" => $vnp_Locale,
-                "vnp_OrderInfo" => $vnp_OrderInfo,
-                "vnp_OrderType" => 'other',
-                "vnp_ReturnUrl" => $vnp_Returnurl,
-                "vnp_TxnRef" => $vnp_TxnRef
-            ];
-            if ($vnp_BankCode !== "") {
-                $inputData['vnp_BankCode'] = $vnp_BankCode;
-            }
-
-            ksort($inputData);
-            $query = "";
-            $hashdata = "";
-
-            foreach ($inputData as $key => $value) {
-                $query .= urlencode($key) . "=" . urlencode($value) . '&';
-                $hashdata .= $hashdata ? '&' : '';
-                $hashdata .= urlencode($key) . "=" . urlencode($value);
-            }
-
-            $vnp_SecureHash = hash_hmac('sha512', $hashdata, $vnp_HashSecret);
-            $redirectUrl = $vnp_Url . "?" . $query . 'vnp_SecureHash=' . $vnp_SecureHash;
-            return redirect($redirectUrl);
-        } catch (Exception $e) {
-            return redirect()->route('customer.showCart')->with('error', 'Lỗi tạo link VNPAY: ' . $e->getMessage());
-        }
-    }
-
-    public function vnpayReturn(Request $request): RedirectResponse
-    {
-        try {
-            $vnp_HashSecret = trim("3MFXY4YJ9X8XMJ3MJFIZGMK6GSDGVET7");
-
-            $checkoutData = session('checkout');
-            $vnp_ResponseCode = $request->get('vnp_ResponseCode');
-            $vnp_TxnRef = $request->get('vnp_TxnRef');
-
-            $inputData = $request->except('vnp_SecureHash', 'vnp_SecureHashType');
-            ksort($inputData);
-
-            $hashData = '';
-            foreach ($inputData as $key => $value) {
-                $hashData .= $key . '=' . urlencode($value) . '&';
-            }
-            $hashData = rtrim($hashData, '&');
-
-            $secureHashCheck = hash_hmac('sha512', $hashData, $vnp_HashSecret);
-            $vnp_SecureHash = $request->get('vnp_SecureHash');
-
-            if (
-                $secureHashCheck === $vnp_SecureHash &&
-                $checkoutData &&
-                $checkoutData['order_code'] === $vnp_TxnRef &&
-                $vnp_ResponseCode === '00'
-            ) {
-                DB::beginTransaction();
+        return $paymentService->handleVnpayReturn(
+            $request,
+            'checkout',
+            function ($checkoutData, $req) {
                 $order = Order::create([
                     'customer_id' => $checkoutData['customer_id'],
-                    'order_code' => $checkoutData['order_code'],
+                    'order_code' => $checkoutData['code'],
                     'total_amount' => $checkoutData['total_amount'],
                     'status' => $checkoutData['status'],
                     'payment_status' => $checkoutData['payment_status'],
@@ -342,15 +270,16 @@ class CustomerController extends Controller
                     'shipping_email' => $checkoutData['shipping_email'],
                     'shipping_address' => $checkoutData['shipping_address'],
                     'payment_time' => now(),
-                    'payment_transaction_id' => $vnp_TxnRef,
-                    'payment_bank_code' => $request->get('vnp_BankCode'),
-                    'payment_response_code' => $vnp_ResponseCode,
-                    'payment_secure_hash'  => $vnp_SecureHash,
+                    'payment_transaction_id' => $req->get('vnp_TxnRef'),
+                    'payment_bank_code' => $req->get('vnp_BankCode'),
+                    'payment_response_code' => $req->get('vnp_ResponseCode'),
+                    'payment_secure_hash'  => $req->get('vnp_SecureHash'),
                 ]);
 
                 foreach ($checkoutData['cart'] as $item) {
                     $cartItem = Cart::find($item['id']);
                     $priceItemCart = $cartItem->product->discount_price * $cartItem->quantity;
+
                     OrderDetail::create([
                         'order_id' => $order->id,
                         'product_id' => $item['product_id'],
@@ -359,19 +288,12 @@ class CustomerController extends Controller
                         'size' => $item['size']
                     ]);
 
-                    Cart::where('id', $item['id'])->delete();
+                    $cartItem->delete();
                 }
 
-                DB::commit();
-                session()->forget('checkout');
                 return redirect()->route('customer.showOrder')->with('success', 'Thanh toán thành công!');
-            }
-
-            return redirect()->route('customer.showCart')->with('error', 'Thanh toán thất bại hoặc dữ liệu không hợp lệ.');
-        } catch (Exception $e) {
-            DB::rollBack();
-            dd($e);
-            return redirect()->route('customer.showCart')->with('error', 'Lỗi xử lý kết quả thanh toán: ' . $e->getMessage());
-        }
+            },
+            fn ($msg) => redirect()->route('customer.showCart')->with('error', $msg)
+        );
     }
 }

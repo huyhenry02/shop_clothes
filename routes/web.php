@@ -3,6 +3,8 @@
 use App\Http\Controllers\AdminCategoryController;
 use App\Http\Controllers\AdminCustomerController;
 use App\Http\Controllers\AdminEmployeeController;
+use App\Http\Controllers\AdminInvoiceController;
+use App\Http\Controllers\AdminOrderController;
 use App\Http\Controllers\AdminProductController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CustomerController;
@@ -11,7 +13,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return redirect()->route('customer.showIndex');
 });
-
 Route::prefix('auth')
     ->name('auth.')
     ->group(function () {
@@ -20,7 +21,6 @@ Route::prefix('auth')
         Route::post('/login', [AuthController::class, 'postLogin'])->name('postLogin');
         Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
     });
-
 Route::prefix('customer')
     ->name('customer.')
     ->group(function () {
@@ -87,5 +87,26 @@ Route::prefix('admin')
                 Route::post('/create', [AdminProductController::class, 'postProduct'])->name('postProduct');
                 Route::post('/update/{product}', [AdminProductController::class, 'putProduct'])->name('putProduct');
                 Route::get('/delete/{product}', [AdminProductController::class, 'delete'])->name('delete');
+            });
+        Route::prefix('order')
+            ->name('order.')
+            ->group(function () {
+                Route::get('/index', [AdminOrderController::class, 'showIndex'])->name('showIndex');
+                Route::get('/update/{order}', [AdminOrderController::class, 'showUpdate'])->name('showUpdate');
+
+                Route::post('/update/{order}', [AdminOrderController::class, 'putOrder'])->name('putOrder');
+            });
+        Route::prefix('invoice')
+            ->name('invoice.')
+            ->group(function () {
+                Route::get('/index', [AdminInvoiceController::class, 'showIndex'])->name('showIndex');
+                Route::get('/create', [AdminInvoiceController::class, 'showCreate'])->name('showCreate');
+                Route::get('/get-product-by-code/{code}', [AdminInvoiceController::class, 'getProductByCode'])->name('getProductByCode');
+                Route::get('/update/{invoice}', [AdminInvoiceController::class, 'showUpdate'])->name('showUpdate');
+
+                Route::post('/create', [AdminInvoiceController::class, 'postInvoice'])->name('postInvoice');
+                Route::get('vnpay-return', [AdminInvoiceController::class, 'vnpayReturn'])->name('vnpay.return')->middleware('auth');
+                Route::post('/update/{invoice}', [AdminInvoiceController::class, 'putInvoice'])->name('putInvoice');
+                Route::get('/delete/{invoice}', [AdminInvoiceController::class, 'delete'])->name('delete');
             });
     });

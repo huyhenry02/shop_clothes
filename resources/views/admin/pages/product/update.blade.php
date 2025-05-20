@@ -11,20 +11,20 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Tên sản phẩm<span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" name="name" required value="{{ old('name', $product->name) }}">
+                                    <label>Tên sản phẩm</label>
+                                    <input type="text" class="form-control" name="name"  value="{{ old('name', $product->name) }}">
                                 </div>
                                 <div class="form-group mt-2">
-                                    <label>Giá bán<span class="text-danger">*</span></label>
-                                    <input type="number" class="form-control" name="price" required value="{{ old('price', $product->price) }}">
+                                    <label>Giá bán</label>
+                                    <input type="number" class="form-control" name="price"  value="{{ old('price', $product->price) }}">
                                 </div>
                                 <div class="form-group mt-2">
                                     <label>Giá giảm</label>
                                     <input type="number" class="form-control" name="discount_price" value="{{ old('discount_price', $product->discount_price) }}">
                                 </div>
                                 <div class="form-group mt-2">
-                                    <label>Số lượng tồn kho<span class="text-danger">*</span></label>
-                                    <input type="number" class="form-control" name="stock_quantity" required value="{{ old('stock_quantity', $product->stock_quantity) }}">
+                                    <label>Số lượng tồn kho</label>
+                                    <input type="number" class="form-control" name="stock_quantity"  value="{{ old('stock_quantity', $product->stock_quantity) }}">
                                 </div>
                                 <div class="form-group mt-2">
                                     <label>Chất liệu</label>
@@ -39,8 +39,8 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Danh mục sản phẩm<span class="text-danger">*</span></label>
-                                    <select name="category_id" class="form-control" required>
+                                    <label>Danh mục sản phẩm</label>
+                                    <select name="category_id" class="form-control" >
                                         @foreach($categories as $category)
                                             <option value="{{ $category->id }}"
                                                 {{ old('category_id', $product->category_id) == $category->id ? 'selected' : '' }}>
@@ -50,8 +50,8 @@
                                     </select>
                                 </div>
                                 <div class="form-group mt-2">
-                                    <label>Slug URL<span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" name="slug" required value="{{ old('slug', $product->slug) }}">
+                                    <label>Slug URL</label>
+                                    <input type="text" class="form-control" name="slug"  value="{{ old('slug', $product->slug) }}">
                                 </div>
                                 <div class="form-group mt-2">
                                     <label>Màu sắc</label>

@@ -10,11 +10,11 @@
                             <div class="col-md-12">
                                 <h5>Thông tin danh mục {{ $category->code }}</h5>
                                 <div class="form-group">
-                                    <label>Tên danh mục sản phẩm <span class="text-danger">*</span></label>
+                                    <label>Tên danh mục sản phẩm </label>
                                     <input type="text" class="form-control" name="name" value="{{ $category->name ?? '' }}">
                                 </div>
                                 <div class="form-group">
-                                    <label>Size sản phẩm <span class="text-danger">*</span></label>
+                                    <label>Size sản phẩm </label>
                                     <div class="input-group">
                                         <input type="text" class="form-control" id="sizeInput" placeholder="Nhập size và nhấn Enter">
                                     </div>

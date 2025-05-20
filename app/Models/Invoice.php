@@ -48,11 +48,6 @@ class Invoice extends Model
         self::PAYMENT_STATUS_FAILED => 'Thanh toán thất bại',
     ];
 
-    public function customer(): BelongsTo
-    {
-        return $this->belongsTo(Customer::class);
-    }
-
     public function employee(): BelongsTo
     {
         return $this->belongsTo(Employee::class);
