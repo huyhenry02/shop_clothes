@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Services\PaymentService;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -65,16 +66,26 @@ class AdminOrderController extends Controller
         ]);
     }
 
-    public function putOrder(Request $request, Order $order): RedirectResponse
+    public function putOrder(Request $request, Order $order, PaymentService $paymentService): RedirectResponse
     {
         try {
             DB::beginTransaction();
             $input = $request->all();
+            $oldStatus = $order->status;
             $order->fill($input)->save();
+            if ($order->status === Order::STATUS_CANCELLED && $oldStatus !== Order::STATUS_CANCELLED) {
+                $orderDetails = $order->orderDetails;
+
+                foreach ($orderDetails as $detail) {
+                    $paymentService->handleInventory($detail->product, $detail->quantity, 'cancel');
+                }
+            }
             DB::commit();
             return redirect()->route('admin.order.showIndex')->with('success', 'Cập nhật đơn hàng thành công');
-        }catch (Exception $e){
+        } catch (Exception $e) {
+            DB::rollBack();
             return redirect()->back()->with('error', 'Cập nhật đơn hàng thất bại');
         }
     }
+
 }

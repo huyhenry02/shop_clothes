@@ -10,7 +10,10 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Customer extends Model
 {
     use HasFactory;
+//    tên bảng
     protected $table = 'customers';
+
+//    tên cột
     protected $fillable = [
         'user_id',
         'full_name',
@@ -28,7 +31,7 @@ class Customer extends Model
         self::GENDER_FEMALE => 'Nữ',
         self::GENDER_OTHER => 'Khác',
     ];
-
+// các hàm định nghĩa mối quan hệ giữa các bảng
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

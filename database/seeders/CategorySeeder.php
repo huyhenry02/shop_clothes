@@ -14,6 +14,7 @@ class CategorySeeder extends Seeder
      */
     public function run(): void
     {
+//        tạo file seeder bằng câu lệnh php artisan make:seeder CategorySeeder
         $path = database_path('seeders/data/categories.csv');
         $csvData = array_map('str_getcsv', file($path));
         $categories = [];

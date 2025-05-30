@@ -47,7 +47,7 @@ class AdminEmployeeController extends Controller
     public function showUpdate(Employee $employee): View
     {
         return view('admin.pages.employee.update',
-        [
+            [
                 'employee' => $employee,
             ]);
     }
@@ -68,7 +68,7 @@ class AdminEmployeeController extends Controller
             $employee->save();
             DB::commit();
             return redirect()->route('admin.employee.showIndex')->with('success', 'Thêm nhân viên thành công');
-        }catch (Exception $exception){
+        } catch (Exception $exception) {
             DB::rollBack();
             return redirect()->route('admin.employee.showIndex')->with('error', 'Thêm nhân viên thất bại');
         }
@@ -89,7 +89,7 @@ class AdminEmployeeController extends Controller
             $user->save();
             DB::commit();
             return redirect()->route('admin.employee.showIndex')->with('success', 'Cập nhật nhân viên thành công');
-        }catch (Exception $exception){
+        } catch (Exception $exception) {
             DB::rollBack();
             return redirect()->route('admin.employee.showIndex')->with('error', 'Cập nhật nhân viên thất bại');
         }
@@ -103,7 +103,7 @@ class AdminEmployeeController extends Controller
             $employee->user()->delete();
             DB::commit();
             return redirect()->route('admin.employee.showIndex')->with('success', 'Xóa nhân viên thành công');
-        }catch (Exception $exception){
+        } catch (Exception $exception) {
             DB::rollBack();
             return redirect()->route('admin.employee.showIndex')->with('error', 'Xóa nhân viên thất bại');
         }

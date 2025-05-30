@@ -9,11 +9,13 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
+//    tạo file migration sẽ bằng câu lệnh: php artisan make:migration create_users
+//  chạy lênh thực thi file migration:  php artisan migrate
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->string('phone', 100)->unique();
+            $table->id(); // tạo cột id
+            $table->string('phone', 100)->unique(); // tạo cột phone với độ dài tối đa 100 ký tự và không trùng lặp
             $table->string('password', 255);
             $table->enum('role', ['admin', 'employee', 'customer']);
             $table->rememberToken();

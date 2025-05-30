@@ -2,13 +2,18 @@
 
 namespace App\Services;
 
+use App\Models\Product;
+use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Closure;
+use InvalidArgumentException;
+use RuntimeException;
 
 class PaymentService
+// tạo service riêng để phục vụ cho việc thanh toán với VNPAY
 {
     protected string $vnpTmnCode = "HBBQ09I7";
     protected string $vnpHashSecret = "3MFXY4YJ9X8XMJ3MJFIZGMK6GSDGVET7";
@@ -82,15 +87,36 @@ class PaymentService
                 $result = $onSuccess($checkoutData, $request);
 
                 DB::commit();
+                // Xóa session sau khi xử lý thành công
                 Session::forget($sessionKey);
 
                 return $result;
             }
 
             return $onFail('Dữ liệu không hợp lệ hoặc thanh toán thất bại');
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             DB::rollBack();
             return $onFail('Lỗi xử lý: ' . $e->getMessage());
         }
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function handleInventory(Product $product, int $quantity, $type): void
+    {
+        if ($type === 'create') {
+            if ($product->stock_quantity < $quantity) {
+                throw new RuntimeException("Không đủ số lượng trong kho để tạo đơn hàng.");
+            }
+
+            $product->stock_quantity -= $quantity;
+        } elseif ($type === 'cancel') {
+            $product->stock_quantity += $quantity;
+        } else {
+            throw new InvalidArgumentException("Loại hành động không hợp lệ: $type");
+        }
+
+        $product->save();
     }
 }

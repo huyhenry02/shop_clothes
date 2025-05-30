@@ -22,12 +22,15 @@ class CustomerController extends Controller
         $first_category_id = 6;
         $second_category_id = 7;
         $third_category_id = 8;
+        // gọi model Category để  lấy danh sách các sản phẩm theo từng danh mục
         $firstCategory = Category::find($first_category_id);
         $secondCategory = Category::find($second_category_id);
         $thirdCategory = Category::find($third_category_id);
+        // lấy 5 sản phẩm đầu tiên của mỗi danh mục
         $list_first_products = Category::find($first_category_id)->products()->take(5)->get();
         $list_second_products = Category::find($second_category_id)->products()->take(5)->get();
         $list_third_products = Category::find($third_category_id)->products()->take(5)->get();
+//        trả về view index của customer
         return view('customer.pages.index',
             [
                 'firstCategory' => $firstCategory,
@@ -185,7 +188,7 @@ class CustomerController extends Controller
     public function deleteCart(Request $request): JsonResponse
     {
         try {
-           DB::beginTransaction();
+            DB::beginTransaction();
             $cart = Cart::findOrFail($request->id);
             $cart->delete();
             $carts = Cart::where('customer_id', auth()->user()->customer->id)->get();
@@ -251,9 +254,9 @@ class CustomerController extends Controller
                         'total_price' => $priceItemCart,
                         'size' => $item->size
                     ]);
+                    $paymentService->handleInventory($item->product, $item->quantity, 'create');
                     $item->delete();
                 }
-
                 DB::commit();
                 return redirect()->route('customer.showOrder')->with('success', 'Đơn hàng của bạn đã được ghi nhận!');
             }
@@ -274,7 +277,7 @@ class CustomerController extends Controller
             ]);
             $returnUrl = route('customer.vnpay.return');
             return $paymentService->createVnpayRedirectUrl($totalPrice, $orderCode, $returnUrl);
-        }catch (Exception $exception){
+        } catch (Exception $exception) {
             DB::rollBack();
             return redirect()->back()->with('error', 'Đặt hàng thất bại');
         }
@@ -285,7 +288,7 @@ class CustomerController extends Controller
         return $paymentService->handleVnpayReturn(
             $request,
             'checkout',
-            function ($checkoutData, $req) {
+            function ($checkoutData, $req) use ($paymentService) {
                 $order = Order::create([
                     'customer_id' => $checkoutData['customer_id'],
                     'order_code' => $checkoutData['code'],
@@ -301,7 +304,7 @@ class CustomerController extends Controller
                     'payment_transaction_id' => $req->get('vnp_TxnRef'),
                     'payment_bank_code' => $req->get('vnp_BankCode'),
                     'payment_response_code' => $req->get('vnp_ResponseCode'),
-                    'payment_secure_hash'  => $req->get('vnp_SecureHash'),
+                    'payment_secure_hash' => $req->get('vnp_SecureHash'),
                 ]);
 
                 foreach ($checkoutData['cart'] as $item) {
@@ -316,12 +319,12 @@ class CustomerController extends Controller
                         'size' => $item['size']
                     ]);
 
+                    $paymentService->handleInventory($cartItem->product, $cartItem->quantity, 'create');
                     $cartItem->delete();
                 }
-
                 return redirect()->route('customer.showOrder')->with('success', 'Thanh toán thành công!');
             },
-            fn ($msg) => redirect()->route('customer.showCart')->with('error', $msg)
+            fn($msg) => redirect()->route('customer.showCart')->with('error', $msg)
         );
     }
 }

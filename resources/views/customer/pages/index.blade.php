@@ -101,6 +101,7 @@
             <div class="row">
                 <div class="col-lg-6">
                     <div class="section-heading">
+{{--                hiển thị tên của danh mục đầu tiên  --}}
                         <h2>{{ $firstCategory->name ?? '' }}</h2>
                         <span>{{ $firstCategory->description ?? '' }}</span>
                     </div>

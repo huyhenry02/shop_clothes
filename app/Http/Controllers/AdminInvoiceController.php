@@ -23,6 +23,7 @@ class AdminInvoiceController extends Controller
             'invoices' => $invoices,
         ]);
     }
+
     public function filter(Request $request): JsonResponse
     {
         $query = Invoice::orderBy('created_at', 'desc')->query();
@@ -54,6 +55,7 @@ class AdminInvoiceController extends Controller
             'html' => view('admin.pages.invoice.table', compact('invoices'))->render()
         ]);
     }
+
     public function showUpdate(Invoice $invoice): View
     {
         return view('admin.pages.invoice.update', [
@@ -89,8 +91,8 @@ class AdminInvoiceController extends Controller
 
             $invoiceCode = 'HD' . date('Ymd') . '-' . $employeeId . '/' . random_int(1, 100);
             $paymentMethod = $request->input('payment_method', Invoice::PAYMENT_METHOD_CASH);
-
             if ($paymentMethod === Invoice::PAYMENT_METHOD_CASH) {
+                // code sử dụng cho việc thanh toán tiền mặt
                 DB::beginTransaction();
                 $invoice = Invoice::create([
                     'invoice_code' => $invoiceCode,
@@ -112,11 +114,12 @@ class AdminInvoiceController extends Controller
                         'quantity' => $item['quantity'],
                         'total_price' => $item['total_price'],
                     ]);
+                    $paymentService->handleInventory($product, $item['quantity'], 'create');
                 }
-
                 DB::commit();
                 return redirect()->route('admin.invoice.showIndex')->with('success', 'Hóa đơn của bạn đã được ghi nhận!');
             }
+            // code sử dụng cho việc thanh toán qua VNPay
             session([
                 'checkout' => [
                     'code' => $invoiceCode,
@@ -131,6 +134,7 @@ class AdminInvoiceController extends Controller
                 ]
             ]);
             $returnUrl = route('admin.invoice.vnpay.return');
+            // Tạo hóa đơn và chuyển hướng đến VNPay
             return $paymentService->createVnpayRedirectUrl($totalAmount, $invoiceCode, $returnUrl);
         } catch (Exception $exception) {
             DB::rollBack();
@@ -140,10 +144,11 @@ class AdminInvoiceController extends Controller
 
     public function vnpayReturn(Request $request, PaymentService $paymentService)
     {
+//        hàm này sẽ xử lý việc trả về từ VNPay sau khi thanh toán
         return $paymentService->handleVnpayReturn(
             $request,
             'checkout',
-            function ($checkoutData, $req) {
+            function ($checkoutData, $req) use ($paymentService) {
                 $invoice = Invoice::create([
                     'invoice_code' => $checkoutData['code'],
                     'customer_name' => $checkoutData['customer_name'],
@@ -165,6 +170,7 @@ class AdminInvoiceController extends Controller
                         'quantity' => $item['quantity'],
                         'total_price' => $item['total_price'],
                     ]);
+                    $paymentService->handleInventory($product, $item['quantity'], 'create');
                 }
 
                 return redirect()->route('admin.invoice.showIndex')->with('success', 'Thanh toán thành công!');
@@ -173,42 +179,51 @@ class AdminInvoiceController extends Controller
         );
     }
 
-    public function putInvoice(Request $request, Invoice $invoice): RedirectResponse
+    public function putInvoice(Request $request, Invoice $invoice, PaymentService $paymentService): RedirectResponse
     {
         try {
             DB::beginTransaction();
             $input = $request->input();
             $invoice->fill($input)->save();
-            $invoiceDetails = $input['invoice_details'] ?? [];
-            if ($invoiceDetails) {
-                foreach ($invoiceDetails as $item) {
-                    $product = Product::where('code', $item['code'])->firstOrFail();
-                    InvoiceDetail::updateOrCreate(
-                        [
-                            'invoice_id' => $invoice->id,
-                            'product_id' => $product->id,
-                            'size' => $item['size'],
-                        ],
-                        [
-                            'quantity' => $item['quantity'],
-                            'total_price' => $item['total_price'],
-                        ]
-                    );
-                }
+            $newDetails = $input['invoice_details'] ?? [];
+            $oldDetails = InvoiceDetail::where('invoice_id', $invoice->id)->get();
+
+            foreach ($oldDetails as $oldItem) {
+                $paymentService->handleInventory($oldItem->product, $oldItem->quantity, 'cancel');
             }
+
+            InvoiceDetail::where('invoice_id', $invoice->id)->delete();
+
+            foreach ($newDetails as $item) {
+                $product = Product::where('code', $item['code'])->firstOrFail();
+                $paymentService->handleInventory($product, $item['quantity'], 'create');
+                InvoiceDetail::create([
+                    'invoice_id' => $invoice->id,
+                    'product_id' => $product->id,
+                    'size' => $item['size'],
+                    'quantity' => $item['quantity'],
+                    'total_price' => $item['total_price'],
+                ]);
+            }
+
             DB::commit();
             return redirect()->route('admin.invoice.showIndex')->with('success', 'Cập nhật hóa đơn thành công!');
         } catch (Exception $exception) {
+            DB::rollBack();
             return redirect()->back()->with('error', 'Cập nhật hóa đơn thất bại');
         }
     }
 
-    public function delete(Invoice $invoice): RedirectResponse
+    public function delete(Invoice $invoice, PaymentService $paymentService): RedirectResponse
     {
         try {
             DB::beginTransaction();
-            $invoice->delete();
+            $details = InvoiceDetail::where('invoice_id', $invoice->id)->get();
+            foreach ($details as $detail) {
+                $paymentService->handleInventory($detail->product, $detail->quantity, 'cancel');
+            }
             InvoiceDetail::where('invoice_id', $invoice->id)->delete();
+            $invoice->delete();
             DB::commit();
             return redirect()->route('admin.invoice.showIndex')->with('success', 'Xóa hóa đơn thành công!');
         } catch (Exception $exception) {
@@ -216,4 +231,5 @@ class AdminInvoiceController extends Controller
             return redirect()->back()->with('error', 'Xóa hóa đơn thất bại');
         }
     }
+
 }

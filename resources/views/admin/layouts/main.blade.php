@@ -1,8 +1,9 @@
+{{-- giao diện đầy đủ--}}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>HT quản lý phòng khám</title>
+    <title>HT quản lý shop ROWAY</title>
     <meta
         content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
         name="viewport"
@@ -65,6 +66,7 @@
             </div>
             <!-- End Logo Header -->
         </div>
+{{-- tách file giao diện side bar và include lại       --}}
         @include('admin.layouts.sidebar')
     </div>
     <!-- End Sidebar -->

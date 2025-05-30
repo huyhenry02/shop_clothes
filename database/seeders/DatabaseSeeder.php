@@ -13,6 +13,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+//        file tổng để gọi đến các file seerder khác
+//        chạy lệnh php artisan db:seed để thực thi các file seeder dưới
         $this->call(
             [
                 UserSeeder::class,

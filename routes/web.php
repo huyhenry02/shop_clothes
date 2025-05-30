@@ -10,6 +10,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CustomerController;
 use Illuminate\Support\Facades\Route;
 
+// nơi định nghĩa các đường dẫn url.
 Route::get('/', function () {
     return redirect()->route('customer.showIndex');
 });
@@ -24,6 +25,11 @@ Route::prefix('auth')
 Route::prefix('customer')
     ->name('customer.')
     ->group(function () {
+//         định nghĩa cho 1 đường dẫn url.
+        // customer/index
+        // CustomerController: tên controller
+        // showIndex: tên hàm trong controller
+        // name: tên route, dùng để gọi lại trong view hoặc controller
         Route::get('/index', [CustomerController::class, 'showIndex'])->name('showIndex');
         Route::get('/contact', [CustomerController::class, 'showContact'])->name('showContact');
         Route::get('/about', [CustomerController::class, 'showAbout'])->name('showAbout');
@@ -46,6 +52,7 @@ Route::prefix('admin')
     ->name('admin.')
     ->middleware('auth')
     ->group(function () {
+
         Route::prefix('employee')
             ->name('employee.')
             ->group(function () {
@@ -56,8 +63,10 @@ Route::prefix('admin')
 
                 Route::post('/update/{employee}', [AdminEmployeeController::class, 'putEmployee'])->name('putEmployee');
                 Route::post('/create', [AdminEmployeeController::class, 'postEmployee'])->name('postEmployee');
+                // ropute dùng để xóa nhân viên
                 Route::get('/delete/{employee}', [AdminEmployeeController::class, 'delete'])->name('delete');
             });
+
         Route::prefix('customer')
             ->name('customer.')
             ->group(function () {
@@ -70,6 +79,7 @@ Route::prefix('admin')
                 Route::post('/create', [AdminCustomerController::class, 'postCustomer'])->name('postCustomer');
                 Route::get('/delete/{customer}', [AdminCustomerController::class, 'delete'])->name('delete');
             });
+
         Route::prefix('category')
             ->name('category.')
             ->group(function () {
@@ -82,6 +92,7 @@ Route::prefix('admin')
                 Route::post('/update/{category}', [AdminCategoryController::class, 'putCategory'])->name('putCategory');
                 Route::get('/delete/{category}', [AdminCategoryController::class, 'delete'])->name('delete');
             });
+
         Route::prefix('product')
             ->name('product.')
             ->group(function () {
@@ -94,6 +105,7 @@ Route::prefix('admin')
                 Route::post('/update/{product}', [AdminProductController::class, 'putProduct'])->name('putProduct');
                 Route::get('/delete/{product}', [AdminProductController::class, 'delete'])->name('delete');
             });
+
         Route::prefix('order')
             ->name('order.')
             ->group(function () {
@@ -103,6 +115,8 @@ Route::prefix('admin')
 
                 Route::post('/update/{order}', [AdminOrderController::class, 'putOrder'])->name('putOrder');
             });
+
+
         Route::prefix('invoice')
             ->name('invoice.')
             ->group(function () {
@@ -113,7 +127,8 @@ Route::prefix('admin')
                 Route::get('/filter-invoices', [AdminInvoiceController::class, 'filter'])->name('filter');
 
                 Route::post('/create', [AdminInvoiceController::class, 'postInvoice'])->name('postInvoice');
-                Route::get('vnpay-return', [AdminInvoiceController::class, 'vnpayReturn'])->name('vnpay.return')->middleware('auth');
+//                xử lý logic khi thanh toán thành công hoặc thất bại
+                Route::get('vnpay-return', [AdminInvoiceController::class, 'vnpayReturn'])->name('vnpay.return');
                 Route::post('/update/{invoice}', [AdminInvoiceController::class, 'putInvoice'])->name('putInvoice');
                 Route::get('/delete/{invoice}', [AdminInvoiceController::class, 'delete'])->name('delete');
             });

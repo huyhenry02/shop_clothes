@@ -2,6 +2,7 @@
 @section('content')
     <div class="row">
         <div class="col-12">
+{{--            {{ route('admin.employee.postEmployee') }} xử lý việc lưu trữ dữ liệu vào trong db--}}
             <form method="POST" action="{{ route('admin.employee.postEmployee') }}" enctype="multipart/form-data">
                 @csrf
                 <div class="card h-100">
