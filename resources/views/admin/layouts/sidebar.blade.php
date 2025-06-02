@@ -28,6 +28,10 @@
         'admin.invoice.showUpdate',
         'admin.invoice.showCreate',
         ];
+    $routesReport = [
+        'admin.report.showOrder',
+        'admin.report.showRevenue',
+        ];
 
     $isActiveCustomer = collect($routesCustomer)->contains(fn($route) => request()->routeIs($route));
     $isActiveEmployee = collect($routesEmployee)->contains(fn($route) => request()->routeIs($route));
@@ -35,6 +39,7 @@
     $isActiveProduct = collect($routesProduct)->contains(fn($route) => request()->routeIs($route));
     $isActiveOrder = collect($routesOrder)->contains(fn($route) => request()->routeIs($route));
     $isActiveInvoice = collect($routesInvoice)->contains(fn($route) => request()->routeIs($route));
+    $isActiveReport = collect($routesReport)->contains(fn($route) => request()->routeIs($route));
 @endphp
 <div class="sidebar-wrapper scrollbar scrollbar-inner">
     <div class="sidebar-content">
@@ -139,6 +144,23 @@
                         </li>
                         <li class="{{ request()->routeIs('admin.invoice.showCreate') ? 'active' : '' }}">
                             <a href="{{ route('admin.invoice.showCreate') }}"><span class="sub-item">Thêm mới hóa đơn</span></a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+            <li class="nav-item {{ $isActiveReport ? 'active' : '' }}">
+                <a data-bs-toggle="collapse" href="#report" class="{{ $isActiveReport ? '' : 'collapsed' }}" aria-expanded="{{ $isActiveReport ? 'true' : 'false' }}">
+                    <i class="fas fa-chart-bar" aria-hidden="true"></i>
+                    <p class="mt-1">Quản lý báo cáo</p>
+                    <span class="caret"></span>
+                </a>
+                <div class="collapse {{ $isActiveReport ? 'show' : '' }}" id="report">
+                    <ul class="nav nav-collapse">
+                        <li class="{{ request()->routeIs('admin.report.showOrder') ? 'active' : '' }}">
+                            <a href="{{ route('admin.report.showOrder') }}"><span class="sub-item">Đơn hàng</span></a>
+                        </li>
+                        <li class="{{ request()->routeIs('admin.report.showRevenue') ? 'active' : '' }}">
+                            <a href="{{ route('admin.report.showRevenue') }}"><span class="sub-item">Doanh thu</span></a>
                         </li>
                     </ul>
                 </div>

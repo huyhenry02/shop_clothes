@@ -1,5 +1,5 @@
 @php
-    $route = request()->route()->getName();
+    use Illuminate\Support\Facades\Route;$route = request()->route()->getName();
 
     $breadcrumbs = [
         'admin.customer.showIndex' => ['Khách hàng', 'Danh sách'],
@@ -24,6 +24,9 @@
         'admin.invoice.showIndex' => ['Hóa đơn', 'Danh sách'],
         'admin.invoice.showUpdate' => ['Hóa đơn', 'Cập nhật'],
         'admin.invoice.showCreate' => ['Hóa đơn', 'Thêm mới'],
+
+        'admin.report.showRevenue' => ['Báo cáo', 'Doanh thu'],
+        'admin.report.showOrder' => ['Báo cáo', 'Đơn hàng'],
     ];
 
     [$moduleTitle, $actionTitle] = $breadcrumbs[$route] ?? ['Trang', 'Không xác định'];
@@ -60,7 +63,8 @@
     >
         <div class="container-fluid">
             <nav
-                class="navbar navbar-header-left navbar-expand-lg navbar-form nav-search p-0 d-none d-lg-flex mt-3" style="color: white"
+                class="navbar navbar-header-left navbar-expand-lg navbar-form nav-search p-0 d-none d-lg-flex mt-3"
+                style="color: white"
             >
                 <h3 class="mb-3" style="color: white">
                     {{ $actionTitle }} {{ $moduleTitle }}
@@ -75,7 +79,13 @@
                         <i class="icon-arrow-right"></i>
                     </li>
                     <li class="nav-item" style="color: white">
-                       Quản lý {{ $moduleTitle }}
+                        @php
+                            $routeName = Route::currentRouteName();
+                                if (str_contains($routeName, 'admin.report')) {
+                                    $moduleTitle = 'Báo cáo';
+                                }
+                        @endphp
+                        Quản lý {{ $moduleTitle }}
                     </li>
                     <li class="separator">
                         <i class="icon-arrow-right"></i>

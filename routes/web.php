@@ -6,6 +6,7 @@ use App\Http\Controllers\AdminEmployeeController;
 use App\Http\Controllers\AdminInvoiceController;
 use App\Http\Controllers\AdminOrderController;
 use App\Http\Controllers\AdminProductController;
+use App\Http\Controllers\AdminReportController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CustomerController;
 use Illuminate\Support\Facades\Route;
@@ -131,5 +132,15 @@ Route::prefix('admin')
                 Route::get('vnpay-return', [AdminInvoiceController::class, 'vnpayReturn'])->name('vnpay.return');
                 Route::post('/update/{invoice}', [AdminInvoiceController::class, 'putInvoice'])->name('putInvoice');
                 Route::get('/delete/{invoice}', [AdminInvoiceController::class, 'delete'])->name('delete');
+            });
+
+        Route::prefix('report')
+            ->name('report.')
+            ->group(function () {
+                Route::get('/order', [AdminReportController::class, 'showOrder'])->name('showOrder');
+                Route::get('/revenue', [AdminReportController::class, 'showRevenue'])->name('showRevenue');
+
+                Route::get('/getOrderData', [AdminReportController::class, 'getOrderData'])->name('getOrderData');
+                Route::get('/getRevenueData', [AdminReportController::class, 'getRevenueData'])->name('getRevenueData');
             });
     });
