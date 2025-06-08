@@ -62,24 +62,25 @@
                     </ul>
                 </div>
             </li>
-
-            <li class="nav-item {{ $isActiveEmployee ? 'active' : '' }}">
-                <a data-bs-toggle="collapse" href="#employee" class="{{ $isActiveEmployee ? '' : 'collapsed' }}" aria-expanded="{{ $isActiveEmployee ? 'true' : 'false' }}">
-                    <i class="fas fa-user-tie"></i>
-                    <p class="mt-1">Quản lý nhân viên</p>
-                    <span class="caret"></span>
-                </a>
-                <div class="collapse {{ $isActiveEmployee ? 'show' : '' }}" id="employee">
-                    <ul class="nav nav-collapse">
-                        <li class="{{ request()->routeIs('admin.employee.showIndex') ? 'active' : '' }}">
-                            <a href="{{ route('admin.employee.showIndex') }}"><span class="sub-item">Danh sách nhân viên</span></a>
-                        </li>
-                        <li class="{{ request()->routeIs('admin.employee.showCreate') ? 'active' : '' }}">
-                            <a href="{{ route('admin.employee.showCreate') }}"><span class="sub-item">Thêm mới nhân viên</span></a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
+            @if(auth()->user()->role === 'admin')
+                <li class="nav-item {{ $isActiveEmployee ? 'active' : '' }}">
+                    <a data-bs-toggle="collapse" href="#employee" class="{{ $isActiveEmployee ? '' : 'collapsed' }}" aria-expanded="{{ $isActiveEmployee ? 'true' : 'false' }}">
+                        <i class="fas fa-user-tie"></i>
+                        <p class="mt-1">Quản lý nhân viên</p>
+                        <span class="caret"></span>
+                    </a>
+                    <div class="collapse {{ $isActiveEmployee ? 'show' : '' }}" id="employee">
+                        <ul class="nav nav-collapse">
+                            <li class="{{ request()->routeIs('admin.employee.showIndex') ? 'active' : '' }}">
+                                <a href="{{ route('admin.employee.showIndex') }}"><span class="sub-item">Danh sách nhân viên</span></a>
+                            </li>
+                            <li class="{{ request()->routeIs('admin.employee.showCreate') ? 'active' : '' }}">
+                                <a href="{{ route('admin.employee.showCreate') }}"><span class="sub-item">Thêm mới nhân viên</span></a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            @endif
 
             <li class="nav-item {{ $isActiveCategory ? 'active' : '' }}">
                 <a data-bs-toggle="collapse" href="#category" class="{{ $isActiveCategory ? '' : 'collapsed' }}" aria-expanded="{{ $isActiveCategory ? 'true' : 'false' }}">
@@ -148,6 +149,7 @@
                     </ul>
                 </div>
             </li>
+            @if(auth()->user()->role === 'admin')
             <li class="nav-item {{ $isActiveReport ? 'active' : '' }}">
                 <a data-bs-toggle="collapse" href="#report" class="{{ $isActiveReport ? '' : 'collapsed' }}" aria-expanded="{{ $isActiveReport ? 'true' : 'false' }}">
                     <i class="fas fa-chart-bar" aria-hidden="true"></i>
@@ -165,6 +167,7 @@
                     </ul>
                 </div>
             </li>
+            @endif
         </ul>
     </div>
 </div>

@@ -51,11 +51,11 @@ Route::prefix('customer')
 
 Route::prefix('admin')
     ->name('admin.')
-    ->middleware('auth')
     ->group(function () {
 
         Route::prefix('employee')
             ->name('employee.')
+            ->middleware('auth')
             ->group(function () {
                 Route::get('/index', [AdminEmployeeController::class, 'showIndex'])->name('showIndex');
                 Route::get('/create', [AdminEmployeeController::class, 'showCreate'])->name('showCreate');
@@ -64,25 +64,26 @@ Route::prefix('admin')
 
                 Route::post('/update/{employee}', [AdminEmployeeController::class, 'putEmployee'])->name('putEmployee');
                 Route::post('/create', [AdminEmployeeController::class, 'postEmployee'])->name('postEmployee');
-                // ropute dùng để xóa nhân viên
+                // route dùng để xóa nhân viên
                 Route::get('/delete/{employee}', [AdminEmployeeController::class, 'delete'])->name('delete');
             });
 
         Route::prefix('customer')
             ->name('customer.')
             ->group(function () {
-                Route::get('/index', [AdminCustomerController::class, 'showIndex'])->name('showIndex');
-                Route::get('/create', [AdminCustomerController::class, 'showCreate'])->name('showCreate');
-                Route::get('/update/{customer}', [AdminCustomerController::class, 'showUpdate'])->name('showUpdate');
-                Route::get('/filter-customers', [AdminCustomerController::class, 'filter'])->name('filter');
+                Route::get('/index', [AdminCustomerController::class, 'showIndex'])->name('showIndex')->middleware('auth');
+                Route::get('/create', [AdminCustomerController::class, 'showCreate'])->name('showCreate')->middleware('auth');
+                Route::get('/update/{customer}', [AdminCustomerController::class, 'showUpdate'])->name('showUpdate')->middleware('auth');
+                Route::get('/filter-customers', [AdminCustomerController::class, 'filter'])->name('filter')->middleware('auth');
 
-                Route::post('/update/{customer}', [AdminCustomerController::class, 'putCustomer'])->name('putCustomer');
+                Route::post('/update/{customer}', [AdminCustomerController::class, 'putCustomer'])->name('putCustomer')->middleware('auth');
                 Route::post('/create', [AdminCustomerController::class, 'postCustomer'])->name('postCustomer');
-                Route::get('/delete/{customer}', [AdminCustomerController::class, 'delete'])->name('delete');
+                Route::get('/delete/{customer}', [AdminCustomerController::class, 'delete'])->name('delete')->middleware('auth');
             });
 
         Route::prefix('category')
             ->name('category.')
+            ->middleware('auth')
             ->group(function () {
                 Route::get('/index', [AdminCategoryController::class, 'showIndex'])->name('showIndex');
                 Route::get('/create', [AdminCategoryController::class, 'showCreate'])->name('showCreate');
@@ -96,6 +97,7 @@ Route::prefix('admin')
 
         Route::prefix('product')
             ->name('product.')
+            ->middleware('auth')
             ->group(function () {
                 Route::get('/index', [AdminProductController::class, 'showIndex'])->name('showIndex');
                 Route::get('/create', [AdminProductController::class, 'showCreate'])->name('showCreate');
@@ -109,6 +111,7 @@ Route::prefix('admin')
 
         Route::prefix('order')
             ->name('order.')
+            ->middleware('auth')
             ->group(function () {
                 Route::get('/index', [AdminOrderController::class, 'showIndex'])->name('showIndex');
                 Route::get('/update/{order}', [AdminOrderController::class, 'showUpdate'])->name('showUpdate');
@@ -120,6 +123,7 @@ Route::prefix('admin')
 
         Route::prefix('invoice')
             ->name('invoice.')
+            ->middleware('auth')
             ->group(function () {
                 Route::get('/index', [AdminInvoiceController::class, 'showIndex'])->name('showIndex');
                 Route::get('/create', [AdminInvoiceController::class, 'showCreate'])->name('showCreate');
@@ -136,6 +140,7 @@ Route::prefix('admin')
 
         Route::prefix('report')
             ->name('report.')
+            ->middleware('auth')
             ->group(function () {
                 Route::get('/order', [AdminReportController::class, 'showOrder'])->name('showOrder');
                 Route::get('/revenue', [AdminReportController::class, 'showRevenue'])->name('showRevenue');

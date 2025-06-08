@@ -49,21 +49,21 @@
                                 <div class="form-group">
                                     <label>Tên người nhận<span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" name="shipping_name"
-                                           value="{{ old('shipping_name', $order->shipping_name) }}">
+                                           value="{{ old('shipping_name', $order->shipping_name) }}" readonly>
                                 </div>
                                 <div class="form-group mt-2">
                                     <label>Số điện thoại<span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" name="shipping_phone"
-                                           value="{{ old('shipping_phone', $order->shipping_phone) }}">
+                                           value="{{ old('shipping_phone', $order->shipping_phone) }}" readonly>
                                 </div>
                                 <div class="form-group mt-2">
                                     <label>Email</label>
                                     <input type="email" class="form-control" name="shipping_email"
-                                           value="{{ old('shipping_email', $order->shipping_email) }}">
+                                           value="{{ old('shipping_email', $order->shipping_email) }}" readonly>
                                 </div>
                                 <div class="form-group mt-2">
                                     <label>Địa chỉ<span class="text-danger">*</span></label>
-                                    <textarea class="form-control"
+                                    <textarea class="form-control" readonly
                                               name="shipping_address">{{ old('shipping_address', $order->shipping_address) }}</textarea>
                                 </div>
                                 <div class="form-group mt-2">

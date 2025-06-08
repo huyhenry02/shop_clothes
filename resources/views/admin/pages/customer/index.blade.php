@@ -39,8 +39,8 @@
                                     <th>Địa chỉ</th>
                                     <th>Giới tính</th>
                                     <th>Ngày sinh</th>
-                                    <th>Số đơn hàng</th>
-                                    <th class="text-center">Thao tác</th>
+                                    <th width="5%">Số đơn hàng</th>
+                                    <th width="10%" class="text-center">Thao tác</th>
                                 </tr>
                                 </thead>
                                 <tbody id="customer-list">

@@ -86,6 +86,8 @@
                                                class="input-text qty text">
                                         <input type="button" value="+" class="plus">
                                     </div>
+                                    <!-- THÊM chỗ này để hiển thị lỗi -->
+                                    <p id="quantity-error" style="color: red; font-size: 14px; margin-top: 5px;"></p>
                                 </div>
                                 <div class="left-content mt-3">
                                     <h6>Size</h6>
@@ -124,16 +126,6 @@
             const plusBtn = document.querySelector('.plus');
             const qtyInput = document.getElementById('quantity-input');
 
-            minusBtn.addEventListener('click', () => {
-                let qty = parseInt(qtyInput.value);
-                if (qty > 1) qtyInput.value = qty - 1;
-            });
-
-            plusBtn.addEventListener('click', () => {
-                let qty = parseInt(qtyInput.value);
-                qtyInput.value = qty + 1;
-            });
-
             const sizeButtons = document.querySelectorAll('.btn-size');
             const selectedSizeInput = document.getElementById('selected-size');
 
@@ -144,14 +136,48 @@
                     selectedSizeInput.value = btn.getAttribute('data-size');
                 });
             });
+            const stockQuantity = {{ $product->stock_quantity ?? 0 }};
 
+            plusBtn.addEventListener('click', () => {
+                let qty = parseInt(qtyInput.value);
+                qtyInput.value = qty + 1;
+                checkQuantityError();
+            });
+
+            minusBtn.addEventListener('click', () => {
+                let qty = parseInt(qtyInput.value);
+                if (qty > 1) qtyInput.value = qty - 1;
+                checkQuantityError();
+            });
+
+            qtyInput.addEventListener('input', () => {
+                checkQuantityError();
+            });
             const form = document.getElementById('add-to-cart-form');
             form.addEventListener('submit', function (e) {
                 if (!selectedSizeInput.value) {
                     e.preventDefault();
                     alert('Vui lòng chọn size trước khi thêm vào giỏ hàng!');
+                    return;
+                }
+
+                if (parseInt(qtyInput.value) > stockQuantity) {
+                    e.preventDefault();
+                    document.getElementById('quantity-error').innerText = 'Số lượng vượt quá số lượng còn lại trong kho!';
+                } else {
+                    document.getElementById('quantity-error').innerText = '';
                 }
             });
+
+            function checkQuantityError() {
+                const qty = parseInt(qtyInput.value);
+                const errorElement = document.getElementById('quantity-error');
+                if (qty > stockQuantity) {
+                    errorElement.innerText = 'Số lượng vượt quá số lượng còn lại trong kho!';
+                } else {
+                    errorElement.innerText = '';
+                }
+            }
         });
     </script>
 @endsection

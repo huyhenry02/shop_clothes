@@ -24,7 +24,7 @@
                                 </div>
                                 <div class="form-group mt-2">
                                     <label>Số lượng tồn kho</label>
-                                    <input type="number" class="form-control" name="stock_quantity"  value="{{ old('stock_quantity', $product->stock_quantity) }}">
+                                    <input type="number" class="form-control" name="stock_quantity" min="0" value="{{ old('stock_quantity', $product->stock_quantity) }}">
                                 </div>
                                 <div class="form-group mt-2">
                                     <label>Chất liệu</label>

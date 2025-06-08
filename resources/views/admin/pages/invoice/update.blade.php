@@ -11,12 +11,12 @@
                             <div class="col-md-6">
                                 <h5>Thông tin khách hàng</h5>
                                 <div class="form-group">
-                                    <label>Tên khách hàng <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" name="customer_name" value="{{ $invoice->customer_name }}" required>
+                                    <label>Tên khách hàng</label>
+                                    <input type="text" class="form-control" name="customer_name" value="{{ $invoice->customer_name }}" readonly>
                                 </div>
                                 <div class="form-group mt-2">
-                                    <label>Số điện thoại <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" name="customer_phone" value="{{ $invoice->customer_phone }}" required>
+                                    <label>Số điện thoại</label>
+                                    <input type="text" class="form-control" name="customer_phone" value="{{ $invoice->customer_phone }}" readonly>
                                 </div>
                                 <div class="form-group mt-2">
                                     <label>Tổng số tiền hóa đơn</label>

@@ -115,6 +115,7 @@ class AdminInvoiceController extends Controller
                         'total_price' => $item['total_price'],
                     ]);
                     $paymentService->handleInventory($product, $item['quantity'], 'create');
+                    $product->save();
                 }
                 DB::commit();
                 return redirect()->route('admin.invoice.showIndex')->with('success', 'Hóa đơn của bạn đã được ghi nhận!');
@@ -171,6 +172,8 @@ class AdminInvoiceController extends Controller
                         'total_price' => $item['total_price'],
                     ]);
                     $paymentService->handleInventory($product, $item['quantity'], 'create');
+                    $product->save();
+
                 }
 
                 return redirect()->route('admin.invoice.showIndex')->with('success', 'Thanh toán thành công!');
@@ -190,6 +193,7 @@ class AdminInvoiceController extends Controller
 
             foreach ($oldDetails as $oldItem) {
                 $paymentService->handleInventory($oldItem->product, $oldItem->quantity, 'cancel');
+                $oldItem->product->save();
             }
 
             InvoiceDetail::where('invoice_id', $invoice->id)->delete();
@@ -197,6 +201,7 @@ class AdminInvoiceController extends Controller
             foreach ($newDetails as $item) {
                 $product = Product::where('code', $item['code'])->firstOrFail();
                 $paymentService->handleInventory($product, $item['quantity'], 'create');
+                $product->save();
                 InvoiceDetail::create([
                     'invoice_id' => $invoice->id,
                     'product_id' => $product->id,
@@ -221,6 +226,7 @@ class AdminInvoiceController extends Controller
             $details = InvoiceDetail::where('invoice_id', $invoice->id)->get();
             foreach ($details as $detail) {
                 $paymentService->handleInventory($detail->product, $detail->quantity, 'cancel');
+                $detail->product->save();
             }
             InvoiceDetail::where('invoice_id', $invoice->id)->delete();
             $invoice->delete();

@@ -116,7 +116,5 @@ class PaymentService
         } else {
             throw new InvalidArgumentException("Loại hành động không hợp lệ: $type");
         }
-
-        $product->save();
     }
 }

@@ -169,6 +169,7 @@ class CustomerController extends Controller
             foreach ($carts as $item) {
                 $totalPrice += $item->product->discount_price * $item->quantity;
             }
+
             DB::commit();
             return response()->json([
                 'success' => true,
@@ -255,6 +256,7 @@ class CustomerController extends Controller
                         'size' => $item->size
                     ]);
                     $paymentService->handleInventory($item->product, $item->quantity, 'create');
+                    $item->product->save();
                     $item->delete();
                 }
                 DB::commit();
@@ -320,6 +322,7 @@ class CustomerController extends Controller
                     ]);
 
                     $paymentService->handleInventory($cartItem->product, $cartItem->quantity, 'create');
+                    $cartItem->product->save();
                     $cartItem->delete();
                 }
                 return redirect()->route('customer.showOrder')->with('success', 'Thanh toán thành công!');
