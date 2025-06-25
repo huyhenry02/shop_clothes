@@ -54,7 +54,10 @@ class CustomerController extends Controller
 
     public function showListProducts(): View
     {
-        $products = Product::orderBy('created_at', 'desc')->where('is_active', 1)->paginate(9);
+        $products = Product::orderBy('created_at', 'desc')
+            ->where('is_active', 1)
+            ->where('stock_quantity', '>', 0)
+            ->paginate(9);
         $categories = Category::all();
         return view('customer.pages.list_products',
             [
@@ -65,7 +68,7 @@ class CustomerController extends Controller
 
     public function filterProducts(Request $request): JsonResponse
     {
-        $query = Product::orderBy('created_at', 'desc')->with('category');
+        $query = Product::orderBy('created_at', 'desc')->where('stock_quantity', '>', 0)->with('category');
 
         if ($request->filled('keyword')) {
             $query->where('name', 'like', '%' . $request->keyword . '%');
@@ -281,7 +284,7 @@ class CustomerController extends Controller
             return $paymentService->createVnpayRedirectUrl($totalPrice, $orderCode, $returnUrl);
         } catch (Exception $exception) {
             DB::rollBack();
-            return redirect()->back()->with('error', 'Đặt hàng thất bại');
+            return redirect()->back()->with('error', $exception->getMessage());
         }
     }
 

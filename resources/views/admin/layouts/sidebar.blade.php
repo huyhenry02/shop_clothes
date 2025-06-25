@@ -30,6 +30,7 @@
         ];
     $routesReport = [
         'admin.report.showOrder',
+        'admin.report.showBestSelling',
         'admin.report.showRevenue',
         ];
 
@@ -163,6 +164,9 @@
                         </li>
                         <li class="{{ request()->routeIs('admin.report.showRevenue') ? 'active' : '' }}">
                             <a href="{{ route('admin.report.showRevenue') }}"><span class="sub-item">Doanh thu</span></a>
+                        </li>
+                        <li class="{{ request()->routeIs('admin.report.showBestSelling') ? 'active' : '' }}">
+                            <a href="{{ route('admin.report.showBestSelling') }}"><span class="sub-item">Sản phẩm bán chạy</span></a>
                         </li>
                     </ul>
                 </div>

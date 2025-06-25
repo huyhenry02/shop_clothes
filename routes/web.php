@@ -136,6 +136,8 @@ Route::prefix('admin')
                 Route::get('vnpay-return', [AdminInvoiceController::class, 'vnpayReturn'])->name('vnpay.return');
                 Route::post('/update/{invoice}', [AdminInvoiceController::class, 'putInvoice'])->name('putInvoice');
                 Route::get('/delete/{invoice}', [AdminInvoiceController::class, 'delete'])->name('delete');
+                Route::get('/export-pdf/{invoice}', [AdminInvoiceController::class, 'exportInvoicePdf'])->name('exportInvoicePdf');
+
             });
 
         Route::prefix('report')
@@ -144,8 +146,11 @@ Route::prefix('admin')
             ->group(function () {
                 Route::get('/order', [AdminReportController::class, 'showOrder'])->name('showOrder');
                 Route::get('/revenue', [AdminReportController::class, 'showRevenue'])->name('showRevenue');
+                Route::get('/best-selling', [AdminReportController::class, 'showBestSelling'])->name('showBestSelling');
 
                 Route::get('/getOrderData', [AdminReportController::class, 'getOrderData'])->name('getOrderData');
                 Route::get('/getRevenueData', [AdminReportController::class, 'getRevenueData'])->name('getRevenueData');
+                Route::get('/getBestSellingData', [AdminReportController::class, 'getBestSellingData'])->name('getBestSellingData');
+                Route::get('/export-pdf-best-selling', [AdminReportController::class, 'exportPdfBestSelling'])->name('exportPdfBestSelling');
             });
     });

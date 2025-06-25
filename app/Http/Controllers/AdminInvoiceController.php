@@ -6,10 +6,12 @@ use App\Models\Invoice;
 use App\Models\InvoiceDetail;
 use App\Models\Product;
 use App\Services\PaymentService;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
@@ -139,7 +141,7 @@ class AdminInvoiceController extends Controller
             return $paymentService->createVnpayRedirectUrl($totalAmount, $invoiceCode, $returnUrl);
         } catch (Exception $exception) {
             DB::rollBack();
-            return redirect()->back()->with('error', ' Tạo hóa đơn thất bại');
+            return redirect()->back()->with('error', $exception->getMessage());
         }
     }
 
@@ -238,4 +240,13 @@ class AdminInvoiceController extends Controller
         }
     }
 
+    public function exportInvoicePdf(Invoice $invoice): Response
+    {
+        $invoice->load(['invoiceDetails.product']);
+
+        $cleanedCode = preg_replace('/[^A-Za-z0-9_\-]/', '-', $invoice->invoice_code);
+        $filename = 'HoaDon-' . $cleanedCode . '.pdf';
+
+        return PDF::loadView('admin.pages.invoice.pdf', compact('invoice'))->stream($filename);
+    }
 }

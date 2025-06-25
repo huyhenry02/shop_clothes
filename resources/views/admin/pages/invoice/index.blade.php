@@ -69,7 +69,7 @@
                                     <th class="text-center" width="12%">Trạng thái thanh toán</th>
                                     <th class="text-center" width="12%">Phương thức thanh toán</th>
                                     <th class="text-center">Tổng tiền</th>
-                                    <th class="text-center" width="12%">Thao tác</th>
+                                    <th class="text-center" width="15%">Thao tác</th>
                                 </tr>
                                 </thead>
                                 <tbody id="invoice-table-body">

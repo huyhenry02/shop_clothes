@@ -27,6 +27,7 @@
 
         'admin.report.showRevenue' => ['Báo cáo', 'Doanh thu'],
         'admin.report.showOrder' => ['Báo cáo', 'Đơn hàng'],
+        'admin.report.showBestSelling' => ['Báo cáo', 'Sản phẩm'],
     ];
 
     [$moduleTitle, $actionTitle] = $breadcrumbs[$route] ?? ['Trang', 'Không xác định'];

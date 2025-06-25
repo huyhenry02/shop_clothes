@@ -1,4 +1,4 @@
-@php use App\Models\Invoice;use Carbon\Carbon; @endphp
+@php use App\Models\Invoice; @endphp
 @foreach($invoices as $key => $val)
     <tr>
         <td>{{ $key + 1 }}</td>
@@ -10,6 +10,10 @@
         <td class="text-center">{{ $val->payment_method ? Invoice::PAYMENT_METHODS[$val->payment_method] : 'N/A' }}</td>
         <td class="text-center">{{ $val->total_amount ? number_format($val->total_amount) : 'N/A' }}</td>
         <td class="text-center">
+            <button type="button" onclick="confirmDownload('{{ route('admin.invoice.exportInvoicePdf', $val->id) }}')"
+                    class="btn btn-sm btn-warning">
+                <i class="fas fa-file-pdf"></i>
+            </button>
             <button
                 class="btn btn-sm btn-info btn-view-product"
                 data-bs-toggle="modal"
@@ -30,3 +34,10 @@
     </tr>
     @include('admin.pages.invoice.detail')
 @endforeach
+<script>
+    function confirmDownload(url) {
+        if (confirm('Bạn có chắc chắn muốn in hóa đơn này không?')) {
+            window.open(url, '_blank');
+        }
+    }
+</script>

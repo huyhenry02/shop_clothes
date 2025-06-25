@@ -37,7 +37,9 @@
                                                         <div class="mb-3">
                                                             <label class="form-label" for="billing-name">Họ và
                                                                 tên</label>
-                                                            <input type="text" class="form-control" id="billing-name" name="shipping_name"
+                                                            <input type="text" class="form-control" id="billing-name"
+                                                                   name="shipping_name" required
+                                                                   value="{{ auth()->user()->customer->full_name ?? '' }}"
                                                                    placeholder="Nhập họ tên">
                                                         </div>
                                                     </div>
@@ -45,7 +47,10 @@
                                                         <div class="mb-3">
                                                             <label class="form-label"
                                                                    for="billing-email-address">Email</label>
-                                                            <input type="email" class="form-control" id="billing-email-address" name="shipping_email"
+                                                            <input type="email" class="form-control"
+                                                                   id="billing-email-address" name="shipping_email"
+                                                                   required
+                                                                   value="{{ auth()->user()->customer->email ?? '' }}"
                                                                    placeholder="Nhập email">
                                                         </div>
                                                     </div>
@@ -53,7 +58,9 @@
                                                         <div class="mb-3">
                                                             <label class="form-label" for="shipping_phone">Số điện
                                                                 thoại</label>
-                                                            <input type="text" class="form-control" id="shipping_phone" name="shipping_phone"
+                                                            <input type="text" class="form-control" id="shipping_phone"
+                                                                   name="shipping_phone" required
+                                                                   value="{{ auth()->user()->phone ?? '' }}"
                                                                    placeholder="Nhập số điện thoại">
                                                         </div>
                                                     </div>
@@ -61,8 +68,9 @@
                                                 <div class="mb-3">
                                                     <label class="form-label" for="billing-address">Địa chỉ giao
                                                         hàng</label>
-                                                    <textarea class="form-control" id="billing-address" rows="3" name="shipping_address"
-                                                              placeholder="Nhập địa chỉ đầy đủ"></textarea>
+                                                    <textarea class="form-control" id="billing-address" rows="3"
+                                                              name="shipping_address" required
+                                                              placeholder="Nhập địa chỉ đầy đủ">{{ auth()->user()->customer->address ?? '' }}</textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -86,7 +94,8 @@
                                             <div class="row">
                                                 <div class="col-lg-6 col-sm-6">
                                                     <label class="card-radio-label">
-                                                        <input type="radio" name="payment_method" id="pay-methodoption3" value="cod"
+                                                        <input type="radio" name="payment_method" id="pay-methodoption3"
+                                                               value="cod"
                                                                class="card-radio-input" checked>
                                                         <span class="card-radio py-3 text-center text-truncate">
                                                             <i class="fa fa-money d-block h2 mb-3"></i>
@@ -96,7 +105,8 @@
                                                 </div>
                                                 <div class="col-lg-6 col-sm-6">
                                                     <label class="card-radio-label">
-                                                        <input type="radio" name="payment_method" id="pay-methodoption1" value="vnpay"
+                                                        <input type="radio" name="payment_method" id="pay-methodoption1"
+                                                               value="vnpay"
                                                                class="card-radio-input">
                                                         <span class="card-radio py-3 text-center text-truncate">
                                                             <i class="fa fa-credit-card d-block h2 mb-3"></i>
@@ -152,10 +162,13 @@
                                             <h5 class="font-size-16 text-truncate">
                                                 <a href="#" class="text-dark">{{ $item->product->name ?? '' }}</a>
                                             </h5>
-                                            <p class="text-muted mb-0 mt-1">{{ number_format($item->product->discount_price) ?? '' }} VND x {{ $item->quantity ?? '' }}</p>
+                                            <p class="text-muted mb-0 mt-1">{{ number_format($item->product->discount_price) ?? '' }}
+                                                VND x {{ $item->quantity ?? '' }}</p>
                                             <p class="text-muted mb-0 mt-1">Size {{ $item->size ?? '' }}</p>
                                         </td>
-                                        <td>{{ number_format($item->product->discount_price * $item->quantity) ?? '' }} VND</td>
+                                        <td>{{ number_format($item->product->discount_price * $item->quantity) ?? '' }}
+                                            VND
+                                        </td>
                                     </tr>
                                 @endforeach
                                 <tr>
