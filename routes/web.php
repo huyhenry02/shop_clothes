@@ -152,5 +152,7 @@ Route::prefix('admin')
                 Route::get('/getRevenueData', [AdminReportController::class, 'getRevenueData'])->name('getRevenueData');
                 Route::get('/getBestSellingData', [AdminReportController::class, 'getBestSellingData'])->name('getBestSellingData');
                 Route::get('/export-pdf-best-selling', [AdminReportController::class, 'exportPdfBestSelling'])->name('exportPdfBestSelling');
+                Route::get('/export-pdf-order', [AdminReportController::class, 'exportPdfOrder'])->name('exportPdfOrder');
+                Route::get('/export-pdf-revenue', [AdminReportController::class, 'exportPdfRevenue'])->name('exportPdfRevenue');
             });
     });

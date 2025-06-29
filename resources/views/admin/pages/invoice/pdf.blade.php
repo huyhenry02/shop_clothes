@@ -205,7 +205,7 @@
         <div class="footer">
             <p>Cảm ơn quý khách đã mua hàng tại ROWAY!</p>
             <p>Mọi thắc mắc xin liên hệ: 0123 456 789 | Email: support@roway.vn</p>
-            <p>Địa chỉ: 123 Đường ABC, Quận 1, TP.HCM</p>
+            <p>Địa chỉ: 362 Minh Khai, Hai Bà Trưng, Hanoi</p>
         </div>
     </div>
 </body>

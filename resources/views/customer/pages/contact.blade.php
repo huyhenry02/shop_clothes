@@ -99,9 +99,9 @@
                     <div class="row">
                         <div class="col-6">
                             <ul>
-                                <li>Địa chỉ cửa hàng:<br><span>123 Đường Nguyễn Trãi, Quận 1, TP.HCM</span></li>
+                                <li>Địa chỉ cửa hàng:<br><span>362 Minh Khai, Hai Bà Trưng, Hanoi</span></li>
                                 <li>Điện thoại:<br><span>0901 234 567</span></li>
-                                <li>Văn phòng:<br><span>TP. Thủ Đức, Hồ Chí Minh</span></li>
+                                <li>Văn phòng:<br><span> Hai Bà Trưng, Hanoi</span></li>
                             </ul>
                         </div>
                         <div class="col-6">

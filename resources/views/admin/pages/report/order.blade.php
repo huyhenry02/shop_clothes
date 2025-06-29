@@ -3,16 +3,18 @@
     <div class="row">
         <div class="col-12">
             <div class="card card-stats card-round">
-                <div class="row card-header">
-                    <div class="col-2">
-                        <div class="form-inline">
-                            <label for="timeType" class="mr-2">Chọn loại thời gian:</label>
-                            <select id="timeType" class="form-control mt-2">
-                                <option value="year">Theo Năm</option>
-                                <option value="quarter">Theo Quý</option>
-                            </select>
-                        </div>
+                <div class="d-flex card-header">
+                    <div class="form-inline">
+                        <label for="timeType" class="mr-2">Chọn loại thời gian:</label>
+                        <select id="timeType" class="form-control mt-2">
+                            <option value="year">Theo Năm</option>
+                            <option value="quarter">Theo Quý</option>
+                        </select>
                     </div>
+                    <button type="button" onclick="confirmDownload('{{ route('admin.report.exportPdfOrder') }}')"
+                            class="btn btn-warning ms-auto">
+                        <i class="fas fa-file-pdf"></i>
+                    </button>
                 </div>
                 <div class="card-body">
                     <section class="chart-section container mt-5">
@@ -46,7 +48,15 @@
         }
     </style>
     <script>
-        $(document).ready(function() {
+        function confirmDownload(url) {
+            const timeType = $('#timeType').val();
+            const fullUrl = url + '?type=' + timeType;
+            window.open(fullUrl, '_blank');
+        }
+
+    </script>
+    <script>
+        $(document).ready(function () {
             const ctx = document.getElementById('revenueChart').getContext('2d');
             let revenueChart;
 
@@ -56,8 +66,8 @@
                 $.ajax({
                     url: '{{ route("admin.report.getOrderData") }}',
                     method: 'GET',
-                    data: { type: timeType },
-                    success: function(response) {
+                    data: {type: timeType},
+                    success: function (response) {
                         $('#loading').hide();
 
                         const labels = response.labels;
@@ -90,7 +100,7 @@
                 });
             }
 
-            $('#timeType').on('change', function() {
+            $('#timeType').on('change', function () {
                 fetchData($(this).val());
             });
 

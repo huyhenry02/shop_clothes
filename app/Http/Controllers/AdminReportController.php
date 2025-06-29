@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Invoice;
-use App\Models\InvoiceDetail;
 use App\Models\Order;
-use App\Models\OrderDetail;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\JsonResponse;
@@ -14,7 +13,6 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
-use Barryvdh\DomPDF\Facade\Pdf;
 
 class AdminReportController extends Controller
 {
@@ -31,96 +29,56 @@ class AdminReportController extends Controller
     public function getOrderData(Request $request): JsonResponse
     {
         $type = $request->get('type', 'year');
-        $currentYear = Carbon::now()->year;
-
-        if ($type === 'quarter') {
-            $query = DB::table('orders')
-                ->selectRaw('COUNT(*) as total, QUARTER(created_at) as quarter')
-                ->where('status', 'completed')
-                ->whereYear('created_at', $currentYear)
-                ->groupBy('quarter')
-                ->orderBy('quarter')
-                ->get();
-
-            $dataMap = $query->keyBy('quarter');
-            $labels = ['Q1', 'Q2', 'Q3', 'Q4'];
-            $data = [];
-
-            foreach ([1, 2, 3, 4] as $q) {
-                $data[] = $dataMap[$q]->total ?? 0;
-            }
-
-        } else {
-            $query = DB::table('orders')
-                ->selectRaw('COUNT(*) as total, MONTH(created_at) as month')
-                ->where('status', 'completed')
-                ->whereYear('created_at', $currentYear)
-                ->groupBy('month')
-                ->orderBy('month')
-                ->get();
-
-            $dataMap = $query->keyBy('month');
-            $labels = [
-                'Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6',
-                'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'
-            ];
-            $data = [];
-
-            foreach (range(1, 12) as $month) {
-                $data[] = $dataMap[$month]->total ?? 0;
-            }
-        }
+        $result = $this->getOrderStatistics($type);
 
         return response()->json([
-            'labels' => $labels,
-            'data' => $data
+            'labels' => $result['labels'],
+            'data' => $result['data']
         ]);
     }
 
     public function getRevenueData(Request $request): JsonResponse
     {
         $type = $request->get('type', 'year');
-        $currentYear = Carbon::now()->year;
 
-        // Orders
-        $ordersQuery = DB::table('orders')
-            ->selectRaw('SUM(total_amount) as total, ' . ($type === 'quarter' ? 'QUARTER(created_at) as period' : 'MONTH(created_at) as period'))
-            ->where('status', 'completed')
-            ->whereYear('created_at', $currentYear)
-            ->groupBy('period')
-            ->pluck('total', 'period');
-
-        // Invoices
-        $invoicesQuery = DB::table('invoices')
-            ->selectRaw('SUM(total_amount) as total, ' . ($type === 'quarter' ? 'QUARTER(created_at) as period' : 'MONTH(created_at) as period'))
-            ->where('status', 'completed')
-            ->whereYear('created_at', $currentYear)
-            ->groupBy('period')
-            ->pluck('total', 'period');
-
-        if ($type === 'quarter') {
-            $labels = ['Q1', 'Q2', 'Q3', 'Q4'];
-            $range = range(1, 4);
-        } else {
-            $labels = [
-                'Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6',
-                'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'
-            ];
-            $range = range(1, 12);
-        }
-
-        $ordersData = [];
-        $invoicesData = [];
-        foreach ($range as $i) {
-            $ordersData[] = (float)($ordersQuery[$i] ?? 0);
-            $invoicesData[] = (float)($invoicesQuery[$i] ?? 0);
-        }
+        $stats = $this->getRevenueStatistics($type);
 
         return response()->json([
-            'labels' => $labels,
-            'orders' => $ordersData,
-            'invoices' => $invoicesData
+            'labels' => $stats['labels'],
+            'orders' => $stats['orders'],
+            'invoices' => $stats['invoices'],
         ]);
+    }
+
+    public function exportPdfOrder(Request $request): Response
+    {
+        $type = $request->get('type', 'year');
+        $result = $this->getOrderStatistics($type);
+
+        $pdf = Pdf::loadView('admin.pages.report.pdf_order', [
+            'labels' => $result['labels'],
+            'data' => $result['data'],
+            'type' => $type,
+            'generatedAt' => now(),
+        ])->setPaper('a4', 'landscape');
+
+        return $pdf->stream('thong_ke_don_hang.pdf');
+    }
+
+    public function exportPdfRevenue(Request $request): Response
+    {
+        $type = $request->get('type', 'year');
+        $stats = $this->getRevenueStatistics($type);
+
+        $pdf = Pdf::loadView('admin.pages.report.pdf_revenue', [
+            'labels' => $stats['labels'],
+            'orders' => $stats['orders'],
+            'invoices' => $stats['invoices'],
+            'type' => $type,
+            'generatedAt' => now(),
+        ])->setPaper('a4', 'landscape');
+
+        return $pdf->stream('thong_ke_doanh_thu.pdf');
     }
 
     public function showBestSelling(): View
@@ -212,5 +170,94 @@ class AdminReportController extends Controller
             )
             ->orderBy('summary.quantity', $sort)
             ->get();
+    }
+
+    private function getOrderStatistics(string $type): array
+    {
+        $currentYear = Carbon::now()->year;
+
+        if ($type === 'quarter') {
+            $query = DB::table('orders')
+                ->selectRaw('COUNT(*) as total, QUARTER(created_at) as period')
+                ->where('status', 'completed')
+                ->whereYear('created_at', $currentYear)
+                ->groupBy('period')
+                ->orderBy('period')
+                ->get();
+
+            $labels = ['Q1', 'Q2', 'Q3', 'Q4'];
+            $range = range(1, 4);
+        } else {
+            $query = DB::table('orders')
+                ->selectRaw('COUNT(*) as total, MONTH(created_at) as period')
+                ->where('status', 'completed')
+                ->whereYear('created_at', $currentYear)
+                ->groupBy('period')
+                ->orderBy('period')
+                ->get();
+
+            $labels = [
+                'Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6',
+                'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'
+            ];
+            $range = range(1, 12);
+        }
+
+        $dataMap = $query->keyBy('period');
+        $data = [];
+
+        foreach ($range as $i) {
+            $data[] = $dataMap[$i]->total ?? 0;
+        }
+
+        return [
+            'labels' => $labels,
+            'data' => $data,
+            'type' => $type
+        ];
+    }
+
+    private function getRevenueStatistics(string $type): array
+    {
+        $currentYear = Carbon::now()->year;
+
+        $ordersQuery = DB::table('orders')
+            ->selectRaw('SUM(total_amount) as total, ' . ($type === 'quarter' ? 'QUARTER(created_at) as period' : 'MONTH(created_at) as period'))
+            ->where('status', 'completed')
+            ->whereYear('created_at', $currentYear)
+            ->groupBy('period')
+            ->pluck('total', 'period');
+
+        $invoicesQuery = DB::table('invoices')
+            ->selectRaw('SUM(total_amount) as total, ' . ($type === 'quarter' ? 'QUARTER(created_at) as period' : 'MONTH(created_at) as period'))
+            ->where('status', 'completed')
+            ->whereYear('created_at', $currentYear)
+            ->groupBy('period')
+            ->pluck('total', 'period');
+
+        if ($type === 'quarter') {
+            $labels = ['Q1', 'Q2', 'Q3', 'Q4'];
+            $range = range(1, 4);
+        } else {
+            $labels = [
+                'Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6',
+                'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'
+            ];
+            $range = range(1, 12);
+        }
+
+        $ordersData = [];
+        $invoicesData = [];
+
+        foreach ($range as $i) {
+            $ordersData[] = (float)($ordersQuery[$i] ?? 0);
+            $invoicesData[] = (float)($invoicesQuery[$i] ?? 0);
+        }
+
+        return [
+            'labels' => $labels,
+            'orders' => $ordersData,
+            'invoices' => $invoicesData,
+        ];
     }
 }

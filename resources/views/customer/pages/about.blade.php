@@ -117,7 +117,7 @@
                             <ul>
                                 <li>Địa chỉ cửa hàng:<br><span>Hà Nội, Việt Nam</span></li>
                                 <li>Điện thoại:<br><span>0901 234 567</span></li>
-                                <li>Văn phòng:<br><span>TP. Hồ Chí Minh</span></li>
+                                <li>Văn phòng:<br><span>362 Minh Khai, Hai Bà Trưng, Hanoi</span></li>
                             </ul>
                         </div>
                         <div class="col-6">
