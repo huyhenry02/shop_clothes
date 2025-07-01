@@ -29,7 +29,8 @@
                                         <div class="hover-content">
                                             <div class="inner">
                                                 <h4>Quần nam</h4>
-                                                <p>Đa dạng mẫu mã từ quần jean, kaki đến quần short, phù hợp mọi phong cách.</p>
+                                                <p>Đa dạng mẫu mã từ quần jean, kaki đến quần short, phù hợp mọi phong
+                                                    cách.</p>
                                             </div>
                                         </div>
                                         <img src="/customer/images/baner-right-image-01.jpg" alt="Áo nam">
@@ -46,7 +47,8 @@
                                         <div class="hover-content">
                                             <div class="inner">
                                                 <h4>Phụ kiện</h4>
-                                                <p>Thắt lưng, ví da, kính râm và nhiều phụ kiện thời trang tinh tế khác cho nam giới.</p>
+                                                <p>Thắt lưng, ví da, kính râm và nhiều phụ kiện thời trang tinh tế khác
+                                                    cho nam giới.</p>
                                             </div>
                                         </div>
                                         <img src="/customer/images/baner-right-image-02.jpg" alt="Quần nam">
@@ -63,7 +65,8 @@
                                         <div class="hover-content">
                                             <div class="inner">
                                                 <h4>Áo nam</h4>
-                                                <p>Bộ sưu tập áo sơ mi, áo thun, áo khoác mang đến diện mạo cuốn hút cho phái mạnh.</p>
+                                                <p>Bộ sưu tập áo sơ mi, áo thun, áo khoác mang đến diện mạo cuốn hút cho
+                                                    phái mạnh.</p>
                                             </div>
                                         </div>
                                         <img src="/customer/images/baner-right-image-03.jpg" alt="Phụ kiện nam">
@@ -80,7 +83,8 @@
                                         <div class="hover-content">
                                             <div class="inner">
                                                 <h4>Giày dép</h4>
-                                                <p>Khám phá các mẫu giày sneaker, giày da, sandal thiết kế chuẩn form nam tính.</p>
+                                                <p>Khám phá các mẫu giày sneaker, giày da, sandal thiết kế chuẩn form
+                                                    nam tính.</p>
                                             </div>
                                         </div>
                                         <img src="/customer/images/baner-right-image-04.jpg" alt="Giày dép nam">
@@ -101,7 +105,7 @@
             <div class="row">
                 <div class="col-lg-6">
                     <div class="section-heading">
-{{--                hiển thị tên của danh mục đầu tiên  --}}
+                        {{--                hiển thị tên của danh mục đầu tiên  --}}
                         <h2>{{ $firstCategory->name ?? '' }}</h2>
                         <span>{{ $firstCategory->description ?? '' }}</span>
                     </div>
@@ -113,44 +117,51 @@
                 <div class="col-lg-12">
                     <div class="men-item-carousel">
                         <div class="owl-men-item owl-carousel">
-                            @foreach($list_first_products as $key => $product)
-                                <div class="item">
-                                    <div class="thumb">
-                                        <div class="hover-content">
-                                            <ul>
-                                                <li>
-                                                    <a href="{{ route('customer.showProductDetail', $product->id) }}" class="action-button">
-                                                        <i class="fa fa-eye"></i>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <form action="{{ route('customer.addToCart') }}" method="POST" class="d-inline">
-                                                        @csrf
-                                                        <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                                        <input type="hidden" name="quantity" value="1">
-                                                        <input type="hidden" name="size" value="{{ $sizes[0] ?? 'M' }}">
-                                                        <button type="submit" class="action-button">
-                                                            <i class="fa fa-shopping-cart"></i>
-                                                        </button>
-                                                    </form>
-                                                </li>
+                            @if(!empty($list_first_products))
+                                @foreach($list_first_products as $key => $product)
+                                    <div class="item">
+                                        <div class="thumb">
+                                            <div class="hover-content">
+                                                <ul>
+                                                    <li>
+                                                        <a href="{{ route('customer.showProductDetail', $product->id) }}"
+                                                           class="action-button">
+                                                            <i class="fa fa-eye"></i>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <form action="{{ route('customer.addToCart') }}" method="POST"
+                                                              class="d-inline">
+                                                            @csrf
+                                                            <input type="hidden" name="product_id"
+                                                                   value="{{ $product->id }}">
+                                                            <input type="hidden" name="quantity" value="1">
+                                                            <input type="hidden" name="size"
+                                                                   value="{{ $sizes[0] ?? 'M' }}">
+                                                            <button type="submit" class="action-button">
+                                                                <i class="fa fa-shopping-cart"></i>
+                                                            </button>
+                                                        </form>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <img src="{{ $product->image ?? '/customer/images/products/default.jpg' }}"
+                                                 alt="">
+                                        </div>
+                                        <div class="down-content">
+                                            <h4>{{ $product->name }}</h4>
+                                            <span>{{ $product->discount_price ? number_format($product->discount_price) : 0 }} VND</span>
+                                            <ul class="stars">
+                                                <li><i class="fa fa-star"></i></li>
+                                                <li><i class="fa fa-star"></i></li>
+                                                <li><i class="fa fa-star"></i></li>
+                                                <li><i class="fa fa-star"></i></li>
+                                                <li><i class="fa fa-star"></i></li>
                                             </ul>
                                         </div>
-                                        <img src="{{ $product->image ?? '/customer/images/products/default.jpg' }}" alt="">
                                     </div>
-                                    <div class="down-content">
-                                        <h4>{{ $product->name }}</h4>
-                                        <span>{{ $product->discount_price ? number_format($product->discount_price) : 0 }} VND</span>
-                                        <ul class="stars">
-                                            <li><i class="fa fa-star"></i></li>
-                                            <li><i class="fa fa-star"></i></li>
-                                            <li><i class="fa fa-star"></i></li>
-                                            <li><i class="fa fa-star"></i></li>
-                                            <li><i class="fa fa-star"></i></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            @endforeach
+                                @endforeach
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -174,44 +185,51 @@
                 <div class="col-lg-12">
                     <div class="men-item-carousel">
                         <div class="owl-men-item owl-carousel">
-                            @foreach($list_second_products as $key => $product)
-                                <div class="item">
-                                    <div class="thumb">
-                                        <div class="hover-content">
-                                            <ul>
-                                                <li>
-                                                    <a href="{{ route('customer.showProductDetail', $product->id) }}" class="action-button">
-                                                        <i class="fa fa-eye"></i>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <form action="{{ route('customer.addToCart') }}" method="POST" class="d-inline">
-                                                        @csrf
-                                                        <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                                        <input type="hidden" name="quantity" value="1">
-                                                        <input type="hidden" name="size" value="{{ $sizes[0] ?? 'M' }}">
-                                                        <button type="submit" class="action-button">
-                                                            <i class="fa fa-shopping-cart"></i>
-                                                        </button>
-                                                    </form>
-                                                </li>
+                            @if(!empty($list_second_products))
+                                @foreach($list_second_products as $key => $product)
+                                    <div class="item">
+                                        <div class="thumb">
+                                            <div class="hover-content">
+                                                <ul>
+                                                    <li>
+                                                        <a href="{{ route('customer.showProductDetail', $product->id) }}"
+                                                           class="action-button">
+                                                            <i class="fa fa-eye"></i>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <form action="{{ route('customer.addToCart') }}" method="POST"
+                                                              class="d-inline">
+                                                            @csrf
+                                                            <input type="hidden" name="product_id"
+                                                                   value="{{ $product->id }}">
+                                                            <input type="hidden" name="quantity" value="1">
+                                                            <input type="hidden" name="size"
+                                                                   value="{{ $sizes[0] ?? 'M' }}">
+                                                            <button type="submit" class="action-button">
+                                                                <i class="fa fa-shopping-cart"></i>
+                                                            </button>
+                                                        </form>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <img src="{{ $product->image ?? '/customer/images/products/default.jpg' }}"
+                                                 alt="">
+                                        </div>
+                                        <div class="down-content">
+                                            <h4>{{ $product->name }}</h4>
+                                            <span>{{ $product->discount_price ? number_format($product->discount_price) : 0 }} VND</span>
+                                            <ul class="stars">
+                                                <li><i class="fa fa-star"></i></li>
+                                                <li><i class="fa fa-star"></i></li>
+                                                <li><i class="fa fa-star"></i></li>
+                                                <li><i class="fa fa-star"></i></li>
+                                                <li><i class="fa fa-star"></i></li>
                                             </ul>
                                         </div>
-                                        <img src="{{ $product->image ?? '/customer/images/products/default.jpg' }}" alt="">
                                     </div>
-                                    <div class="down-content">
-                                        <h4>{{ $product->name }}</h4>
-                                        <span>{{ $product->discount_price ? number_format($product->discount_price) : 0 }} VND</span>
-                                        <ul class="stars">
-                                            <li><i class="fa fa-star"></i></li>
-                                            <li><i class="fa fa-star"></i></li>
-                                            <li><i class="fa fa-star"></i></li>
-                                            <li><i class="fa fa-star"></i></li>
-                                            <li><i class="fa fa-star"></i></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            @endforeach
+                                @endforeach
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -235,44 +253,51 @@
                 <div class="col-lg-12">
                     <div class="men-item-carousel">
                         <div class="owl-men-item owl-carousel">
-                            @foreach($list_third_products as $key => $product)
-                                <div class="item">
-                                    <div class="thumb">
-                                        <div class="hover-content">
-                                            <ul>
-                                                <li>
-                                                    <a href="{{ route('customer.showProductDetail', $product->id) }}" class="action-button">
-                                                        <i class="fa fa-eye"></i>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <form action="{{ route('customer.addToCart') }}" method="POST" class="d-inline">
-                                                        @csrf
-                                                        <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                                        <input type="hidden" name="quantity" value="1">
-                                                        <input type="hidden" name="size" value="{{ $sizes[0] ?? 'M' }}">
-                                                        <button type="submit" class="action-button">
-                                                            <i class="fa fa-shopping-cart"></i>
-                                                        </button>
-                                                    </form>
-                                                </li>
+                            @if(!empty($list_third_products))
+                                @foreach($list_third_products as $key => $product)
+                                    <div class="item">
+                                        <div class="thumb">
+                                            <div class="hover-content">
+                                                <ul>
+                                                    <li>
+                                                        <a href="{{ route('customer.showProductDetail', $product->id) }}"
+                                                           class="action-button">
+                                                            <i class="fa fa-eye"></i>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <form action="{{ route('customer.addToCart') }}" method="POST"
+                                                              class="d-inline">
+                                                            @csrf
+                                                            <input type="hidden" name="product_id"
+                                                                   value="{{ $product->id }}">
+                                                            <input type="hidden" name="quantity" value="1">
+                                                            <input type="hidden" name="size"
+                                                                   value="{{ $sizes[0] ?? 'M' }}">
+                                                            <button type="submit" class="action-button">
+                                                                <i class="fa fa-shopping-cart"></i>
+                                                            </button>
+                                                        </form>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <img src="{{ $product->image ?? '/customer/images/products/default.jpg' }}"
+                                                 alt="">
+                                        </div>
+                                        <div class="down-content">
+                                            <h4>{{ $product->name }}</h4>
+                                            <span>{{ $product->discount_price ? number_format($product->discount_price) : 0 }} VND</span>
+                                            <ul class="stars">
+                                                <li><i class="fa fa-star"></i></li>
+                                                <li><i class="fa fa-star"></i></li>
+                                                <li><i class="fa fa-star"></i></li>
+                                                <li><i class="fa fa-star"></i></li>
+                                                <li><i class="fa fa-star"></i></li>
                                             </ul>
                                         </div>
-                                        <img src="{{ $product->image ?? '/customer/images/products/default.jpg' }}" alt="">
                                     </div>
-                                    <div class="down-content">
-                                        <h4>{{ $product->name }}</h4>
-                                        <span>{{ $product->discount_price ? number_format($product->discount_price) : 0 }} VND</span>
-                                        <ul class="stars">
-                                            <li><i class="fa fa-star"></i></li>
-                                            <li><i class="fa fa-star"></i></li>
-                                            <li><i class="fa fa-star"></i></li>
-                                            <li><i class="fa fa-star"></i></li>
-                                            <li><i class="fa fa-star"></i></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            @endforeach
+                                @endforeach
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -292,8 +317,10 @@
                             <i class="fa fa-quote-left"></i>
                             <p>Chúng tôi không ngừng cập nhật những xu hướng mới nhất dành riêng cho phái mạnh.</p>
                         </div>
-                        <p>Hệ thống sản phẩm của chúng tôi bao gồm nhiều danh mục như áo sơ mi, quần jean, giày thể thao, túi xách da, kính râm và nhiều hơn thế nữa.</p>
-                        <p>Nếu bạn đang tìm kiếm sự khác biệt trong phong cách cá nhân, đây chính là nơi để bắt đầu hành trình ấy. Hãy chia sẻ với bạn bè để cùng trải nghiệm nhé!</p>
+                        <p>Hệ thống sản phẩm của chúng tôi bao gồm nhiều danh mục như áo sơ mi, quần jean, giày thể
+                            thao, túi xách da, kính râm và nhiều hơn thế nữa.</p>
+                        <p>Nếu bạn đang tìm kiếm sự khác biệt trong phong cách cá nhân, đây chính là nơi để bắt đầu hành
+                            trình ấy. Hãy chia sẻ với bạn bè để cùng trải nghiệm nhé!</p>
                         <div class="main-border-button">
                             <a href="{{ route('customer.showListProducts') }}">Xem tất cả sản phẩm</a>
                         </div>
@@ -344,17 +371,20 @@
                         <div class="row">
                             <div class="col-lg-5">
                                 <fieldset>
-                                    <input name="name" type="text" id="name" placeholder="Họ và tên của bạn" required="">
+                                    <input name="name" type="text" id="name" placeholder="Họ và tên của bạn"
+                                           required="">
                                 </fieldset>
                             </div>
                             <div class="col-lg-5">
                                 <fieldset>
-                                    <input name="email" type="text" id="email" pattern="[^ @]*@[^ @]*" placeholder="Địa chỉ email của bạn" required="">
+                                    <input name="email" type="text" id="email" pattern="[^ @]*@[^ @]*"
+                                           placeholder="Địa chỉ email của bạn" required="">
                                 </fieldset>
                             </div>
                             <div class="col-lg-2">
                                 <fieldset>
-                                    <button type="submit" id="form-submit" class="main-dark-button"><i class="fa fa-paper-plane"></i></button>
+                                    <button type="submit" id="form-submit" class="main-dark-button"><i
+                                            class="fa fa-paper-plane"></i></button>
                                 </fieldset>
                             </div>
                         </div>
@@ -373,7 +403,8 @@
                             <ul>
                                 <li>Giờ làm việc:<br><span>08:00 - 21:00 mỗi ngày</span></li>
                                 <li>Email:<br><span>hotro@roway.vn</span></li>
-                                <li>Mạng xã hội:<br><span><a href="#">Facebook</a>, <a href="#">Instagram</a>, <a href="#">Zalo</a></span></li>
+                                <li>Mạng xã hội:<br><span><a href="#">Facebook</a>, <a href="#">Instagram</a>, <a
+                                            href="#">Zalo</a></span></li>
                             </ul>
                         </div>
                     </div>
@@ -395,10 +426,12 @@
             color: black !important;
             transition: all 0.3s ease-in-out !important;
         }
+
         .action-button:hover {
             background: #f2f2f2 !important;
             color: #333 !important;
         }
+
         .hover-content ul {
             display: flex !important;
             justify-content: center !important;

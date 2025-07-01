@@ -54,6 +54,8 @@
                                 <div class="col-md-6">
                                     <p class="text-muted mb-0">Trạng thái đơn
                                         hàng: {{ Order::STATUSES[$val->status] ?? '' }}</p>
+                                    <p class="text-muted mb-0">Người duyệt
+                                        hàng: {{ $val->employee->full_name ?? '' }}</p>
                                     <p class="text-muted mb-0">Trạng thái thanh toán
                                         : {{ Order::PAYMENT_STATUSES[$val->payment_status] ?? '' }}</p>
                                     <p class="text-muted mb-0">Ngày nhận hàng

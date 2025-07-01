@@ -20,6 +20,7 @@
 
         'admin.order.showIndex' => ['Đơn hàng', 'Danh sách'],
         'admin.order.showUpdate' => ['Đơn hàng', 'Cập nhật'],
+        'admin.order.showCreate' => ['Đơn hàng', 'Thêm mới'],
 
         'admin.invoice.showIndex' => ['Hóa đơn', 'Danh sách'],
         'admin.invoice.showUpdate' => ['Hóa đơn', 'Cập nhật'],

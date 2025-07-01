@@ -114,10 +114,14 @@ Route::prefix('admin')
             ->middleware('auth')
             ->group(function () {
                 Route::get('/index', [AdminOrderController::class, 'showIndex'])->name('showIndex');
+                Route::get('/create', [AdminOrderController::class, 'showCreate'])->name('showCreate');
                 Route::get('/update/{order}', [AdminOrderController::class, 'showUpdate'])->name('showUpdate');
                 Route::get('/filter-orders', [AdminOrderController::class, 'filter'])->name('filter');
+                Route::get('/product/{code}', [AdminOrderController::class, 'getProductByCode'])->name('getProductByCode');
 
+                Route::post('/create', [AdminOrderController::class, 'postOrder'])->name('postOrder');
                 Route::post('/update/{order}', [AdminOrderController::class, 'putOrder'])->name('putOrder');
+                Route::get('vnpay-return', [AdminOrderController::class, 'vnpayReturn'])->name('vnpay.return');
             });
 
 

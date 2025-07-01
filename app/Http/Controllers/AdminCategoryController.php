@@ -84,11 +84,30 @@ class AdminCategoryController extends Controller
     {
         try {
             DB::beginTransaction();
+
+            // Lấy tất cả sản phẩm thuộc danh mục
+            $products = $category->products()->with(['orderDetails', 'invoiceDetails'])->get();
+
+            // Xóa các chi tiết đơn hàng và hóa đơn liên quan đến sản phẩm
+            foreach ($products as $product) {
+                // Xóa chi tiết đơn hàng
+                $product->orderDetails()->delete();
+
+                // Xóa chi tiết hóa đơn
+                $product->invoiceDetails()->delete();
+            }
+
+            // Xóa tất cả sản phẩm thuộc danh mục
+            $category->products()->delete();
+
+            // Xóa danh mục
             $category->delete();
+
             DB::commit();
-            return redirect()->route('admin.category.showIndex')->with('success', 'Xóa loại sản phẩm thành công');
-        }catch (Exception $e){
-            return redirect()->route('admin.category.showIndex')->with('error', 'Xóa loại sản phẩm thất bại');
+            return redirect()->route('admin.category.showIndex')->with('success', 'Xóa loại sản phẩm và tất cả dữ liệu liên quan thành công');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->route('admin.category.showIndex')->with('error', 'Xóa loại sản phẩm thất bại: ' . $e->getMessage());
         }
     }
 }

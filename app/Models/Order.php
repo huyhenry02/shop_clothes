@@ -30,6 +30,7 @@ class Order extends Model
         'payment_bank_code',
         'payment_response_code',
         'payment_secure_hash',
+        'updated_by',
     ];
     public const STATUS_PENDING = 'pending';
     public const STATUS_PROCESSING = 'processing';
@@ -79,5 +80,10 @@ class Order extends Model
     public function orderDetails(): HasMany
     {
         return $this->hasMany(OrderDetail::class);
+    }
+
+    public function employee(): BelongsTo
+    {
+        return $this->belongsTo(Employee::class, 'updated_by');
     }
 }

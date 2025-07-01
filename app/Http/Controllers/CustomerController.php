@@ -27,9 +27,18 @@ class CustomerController extends Controller
         $secondCategory = Category::find($second_category_id);
         $thirdCategory = Category::find($third_category_id);
         // lấy 5 sản phẩm đầu tiên của mỗi danh mục
-        $list_first_products = Category::find($first_category_id)->products()->take(5)->get();
-        $list_second_products = Category::find($second_category_id)->products()->take(5)->get();
-        $list_third_products = Category::find($third_category_id)->products()->take(5)->get();
+        $list_first_products = null;
+        $list_second_products = null;
+        $list_third_products = null;
+        if (!empty($firstCategory)) {
+            $list_first_products = $firstCategory->products()->take(5)->get();
+        }
+        if (!empty($secondCategory)) {
+            $list_second_products = $secondCategory->products()->take(5)->get();
+        }
+        if (!empty($thirdCategory)) {
+            $list_third_products = $thirdCategory->products()->take(5)->get();
+        }
 //        trả về view index của customer
         return view('customer.pages.index',
             [

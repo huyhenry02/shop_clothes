@@ -22,6 +22,7 @@
     $routesOrder = [
         'admin.order.showIndex',
         'admin.order.showUpdate',
+        'admin.order.showCreate',
         ];
     $routesInvoice = [
         'admin.invoice.showIndex',
@@ -129,6 +130,9 @@
                     <ul class="nav nav-collapse">
                         <li class="{{ request()->routeIs('admin.order.showIndex') ? 'active' : '' }}">
                             <a href="{{ route('admin.order.showIndex') }}"><span class="sub-item">Danh sách đơn hàng</span></a>
+                        </li>
+                        <li class="{{ request()->routeIs('admin.order.showCreate') ? 'active' : '' }}">
+                            <a href="{{ route('admin.order.showCreate') }}"><span class="sub-item">Thêm mới đơn hàng</span></a>
                         </li>
                     </ul>
                 </div>
